@@ -13,16 +13,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import org.alberto97.arpavbts.*
+import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.BTSAdapter
 import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.ActivityMapBinding
-import org.alberto97.arpavbts.models.BTSData
+import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.GestoreResult
 import org.alberto97.arpavbts.tools.GestoriUtils
+import org.alberto97.arpavbts.tools.all
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
@@ -83,12 +84,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         getMap().setOnMapClickListener(this)
 
         clusterManager = ClusterManager(this, getMap())
-        val renderer =
-            MarkerRenderer(
-                this,
-                getMap(),
-                clusterManager
-            )
+        val renderer = MarkerRenderer(this, getMap(), clusterManager)
         renderer.minClusterSize = 1
         clusterManager.renderer = renderer
         clusterManager.setOnClusterClickListener(this)
@@ -96,8 +92,8 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         getMap().setOnCameraIdleListener(clusterManager)
         getMap().setOnMarkerClickListener(clusterManager)
 
-        // Force a refresh. List is updated before map initialization :(
-        setMarkers(viewModel.btsList.value!!)
+        // Fetch data
+        onGestoreResult(all)
     }
 
     override fun onMapClick(p0: LatLng?) {
@@ -137,7 +133,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         data.forEach{
             list.add(
                 GestoreAdapterItem(
-                    utils.getColorForImage(it.data),
+                    utils.getColorForImage(it.data.gestore),
                     it.data.nome,
                     it.data.idImpianto.toString()
                 )
@@ -153,7 +149,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         }
     }
 
-    private fun setBtsBottom(data: BTSData) {
+    private fun setBtsBottom(data: Bts) {
         hideGestoreBottomBehavior()
         showBtsBottomBehavior()
 
@@ -224,6 +220,14 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
                     .showNow(supportFragmentManager, "")
                 true
             }
+//            R.id.action_clear -> {
+//                viewModel.clearDb()
+//                return true
+//            }
+//            R.id.action_update -> {
+//                viewModel.updateDb()
+//                return true
+//            }
             else ->
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

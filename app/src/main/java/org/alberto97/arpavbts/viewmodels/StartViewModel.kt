@@ -5,16 +5,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.UnstableDefault
-import org.alberto97.arpavbts.repositories.IBtsRepository
+import org.alberto97.arpavbts.db.IBtsRepository
 
 class StartViewModel(private val repo: IBtsRepository) : ViewModel() {
 
-    @UnstableDefault
     fun start() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repo.update()
+                repo.updateBts()
             }
         }
     }

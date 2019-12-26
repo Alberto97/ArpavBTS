@@ -2,6 +2,7 @@ package org.alberto97.arpavbts
 
 import android.app.Application
 import org.alberto97.arpavbts.modules.appModule
+import org.alberto97.arpavbts.modules.dbModule
 import org.alberto97.arpavbts.modules.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -11,13 +12,14 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidLogger()
+            if (BuildConfig.DEBUG)
+                androidLogger()
 
             // Android context
             androidContext(this@MainApplication)
 
             // modules
-            modules(networkModule + appModule)
+            modules(networkModule + dbModule + appModule)
         }
     }
 }

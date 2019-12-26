@@ -18,7 +18,7 @@ class MarkerRenderer(context: Context, map: GoogleMap, clusterManager: ClusterMa
     override fun onBeforeClusterItemRendered(item: ClusterItemData?, markerOptions: MarkerOptions?) {
         item ?: return
 
-        val color = utils.getColorForMarker(item)
+        val color = utils.getColorForMarker(item.data.gestore)
         markerOptions!!.icon(BitmapDescriptorFactory.defaultMarker(color))
         super.onBeforeClusterItemRendered(item, markerOptions)
     }
