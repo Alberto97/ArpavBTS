@@ -9,7 +9,7 @@ import org.alberto97.arpavbts.databinding.ListItemGestoreBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 
 
-class GestoreAdapter(private val list: ArrayList<GestoreAdapterItem>, val listener: (GestoreAdapterItem) -> Unit) :
+class GestoreAdapter(private val list: List<GestoreAdapterItem>, val listener: (GestoreAdapterItem) -> Unit) :
     RecyclerView.Adapter<GestoreAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

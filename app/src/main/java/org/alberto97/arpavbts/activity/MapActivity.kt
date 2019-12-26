@@ -133,7 +133,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         data.forEach{
             list.add(
                 GestoreAdapterItem(
-                    utils.getColorForImage(it.data.gestore),
+                    utils.getColor(it.data.gestore),
                     it.data.nome,
                     it.data.idImpianto.toString()
                 )

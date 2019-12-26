@@ -7,16 +7,14 @@ import androidx.lifecycle.ViewModel
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.models.ClusterItemData
-import org.alberto97.arpavbts.tools.all
+import org.alberto97.arpavbts.tools.carrierNameById
 
 class MapViewModel(private val btsRepo: IBtsRepository) : ViewModel() {
 
     private val _carrierInput = MutableLiveData<String>()
     private val _btsList: LiveData<List<Bts>> = Transformations.switchMap(_carrierInput) {
-        if (it == all)
-            btsRepo.getBts()
-        else
-            btsRepo.getBts(it)
+        val carrier = carrierNameById[it]
+        btsRepo.getBts(carrier)
     }
 
     val btsList: LiveData<List<ClusterItemData>> = Transformations.map(_btsList) {

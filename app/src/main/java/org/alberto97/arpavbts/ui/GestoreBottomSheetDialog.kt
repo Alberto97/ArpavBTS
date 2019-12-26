@@ -1,5 +1,6 @@
 package org.alberto97.arpavbts.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.DialogGestoreBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.*
-import org.koin.android.ext.android.inject
 
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -20,24 +20,13 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
             inflater,
             R.layout.dialog_gestore, container, false)
 
-        val utils : IGestoriUtils by inject()
         val list = arrayListOf(
-            GestoreAdapterItem(utils.getColorForImage(all), "Tutti",
-                all
-            ),
-            GestoreAdapterItem(utils.getColorForImage(iliad), "Iliad",
-                iliad
-            ),
-            GestoreAdapterItem(utils.getColorForImage(tim), "TIM",
-                tim
-            ),
-            GestoreAdapterItem(utils.getColorForImage(vodafone), "Vodafone",
-                vodafone
-            ),
-            GestoreAdapterItem(utils.getColorForImage(windTre), "Wind Tre",
-                windTre
-            )
-            //GestoreAdapterItem(utils.getColorForImage(others), "Altri", others)
+            getItem("Tutti", all),
+            getItem("TIM", tim),
+            getItem("Vodafone", vodafone),
+            getItem("Wind Tre", windTre),
+            getItem("Iliad", iliad)
+            //getItem("Altri", others)
         )
 
         val rec = binding.recyclerView
@@ -47,5 +36,12 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         return binding.root
+    }
+
+    private fun getItem(name: String, id: String): GestoreAdapterItem {
+        val colorStr = carrierColor[id] ?: allColor
+        val color = Color.parseColor(colorStr)
+
+        return GestoreAdapterItem(color, name, id)
     }
 }
