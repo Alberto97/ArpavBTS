@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -22,6 +21,7 @@ import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResult,
     ClusterManager.OnClusterClickListener<ClusterItemData>, ClusterManager.OnClusterItemClickListener<ClusterItemData> {
@@ -33,10 +33,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResu
     private lateinit var gestoreBehavior: BottomSheetBehavior<LinearLayout>
 
     private lateinit var binding: ActivityMapBinding
-
-    private val viewModel by lazy {
-        ViewModelProviders.of(this)[MapViewModel::class.java]
-    }
+    private val viewModel: MapViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

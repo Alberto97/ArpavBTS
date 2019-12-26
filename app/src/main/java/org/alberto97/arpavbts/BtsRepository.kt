@@ -8,9 +8,14 @@ import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.BTSList
 import java.io.File
 
-class BtsRepository(val app: Application) {
+interface IBtsRepository {
+    suspend fun update()
+    fun get(): List<BTSData>
+    fun get(gestore: String): List<BTSData>
+}
+
+class BtsRepository(val app: Application, private val arpavApi: ArpavApi) : IBtsRepository {
     private val fileName = "impianti.pb"
-    private val arpavService = ArpavService.getInstance()
     private var btsList: List<BTSData>
 
     init {
@@ -43,22 +48,22 @@ class BtsRepository(val app: Application) {
         }
     }
 
-    fun get(): List<BTSData> {
+    override fun get(): List<BTSData> {
         return btsList
     }
 
-    fun get(gestore: String): List<BTSData> {
+    override fun get(gestore: String): List<BTSData> {
         return btsList.filter { it.gestore == gestore }
     }
 
     @UnstableDefault
-    suspend fun update() {
+    override suspend fun update() {
 
         val dir = app.filesDir
         val outFile = File(dir, fileName)
 
         // Fetch new data
-        val data = arpavService.fetchData()
+        val data = arpavApi.fetchData()
         val list = data.features.map {
             val geometry = it.geometry
             val position = geometry.coordinates[0]
@@ -81,17 +86,5 @@ class BtsRepository(val app: Application) {
         val btsList = BTSList(list)
         val bytes = ProtoBuf.dump(BTSList.serializer(), btsList)
         outFile.writeBytes(bytes)
-    }
-
-    companion object {
-        private var sInstance: BtsRepository? = null
-        fun instance(app: Application): BtsRepository {
-            if (sInstance == null) {
-                synchronized(BtsRepository) {
-                    sInstance = BtsRepository(app)
-                }
-            }
-            return sInstance!!
-        }
     }
 }

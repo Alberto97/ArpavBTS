@@ -5,18 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.serialization.UnstableDefault
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.StartViewModel
 import org.alberto97.arpavbts.databinding.FragmentStartBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartFragment : Fragment() {
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this)[StartViewModel::class.java]
-    }
+    private val viewModel: StartViewModel by viewModel()
     lateinit var binding: FragmentStartBinding
 
     @UnstableDefault

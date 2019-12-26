@@ -3,16 +3,15 @@ package org.alberto97.arpavbts
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.ClusterItemData
 
-class MapViewModel(app: Application) : AndroidViewModel(app) {
+class MapViewModel(private val btsRepo: IBtsRepository) : ViewModel() {
 
     val btsList: MutableLiveData<List<ClusterItemData>> by lazy {
         MutableLiveData<List<ClusterItemData>>()
     }
-
-    private val btsRepo = BtsRepository.instance(app)
 
     init {
         loadData(btsRepo.get())

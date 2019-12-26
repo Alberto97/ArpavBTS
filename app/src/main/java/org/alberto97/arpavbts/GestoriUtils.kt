@@ -5,9 +5,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.ClusterItemData
 
-class GestoriUtils {
+interface IGestoriUtils {
+    fun getColorForMarker(item: ClusterItemData): Float
+    fun getColorForImage(gestore: String): Int
+    fun getColorForImage(data: BTSData): Int
+}
 
-    fun getColorForMarker(item: ClusterItemData): Float {
+class GestoriUtils : IGestoriUtils {
+
+    override fun getColorForMarker(item: ClusterItemData): Float {
         return when(item.data.gestore) {
             iliad -> BitmapDescriptorFactory.HUE_RED
             tim -> BitmapDescriptorFactory.HUE_AZURE
@@ -17,7 +23,7 @@ class GestoriUtils {
         }
     }
 
-    fun getColorForImage(gestore: String): Int {
+    override fun getColorForImage(gestore: String): Int {
         return when(gestore) {
             iliad -> Color.parseColor("#d32f2f")
             tim -> Color.parseColor("#29B6F6")
@@ -28,7 +34,7 @@ class GestoriUtils {
         }
     }
 
-    fun getColorForImage(data: BTSData): Int {
+    override fun getColorForImage(data: BTSData): Int {
         return getColorForImage(data.gestore)
     }
 }
