@@ -103,6 +103,14 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
 
     override fun onClusterClick(cluster: Cluster<ClusterItemData>?): Boolean {
         cluster ?: return false
+
+        if (cluster.size > 50) {
+            val nextZoomLevel = getMap().cameraPosition.zoom + 1.0f
+            getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(cluster.position, nextZoomLevel))
+            return true
+        }
+
+        getMap().animateCamera(CameraUpdateFactory.newLatLng(cluster.position))
         val res = cluster.items.toList()
         setGestoreBottom(res)
         return true
@@ -110,7 +118,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
 
     override fun onClusterItemClick(marker: ClusterItemData?): Boolean {
         marker ?: return false
-        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(marker.position, getMap().cameraPosition!!.zoom))
+        getMap().animateCamera(CameraUpdateFactory.newLatLng(marker.position))
 
         // If there's a title, cluster is a marker
         if (marker.title.isNotEmpty()) {
