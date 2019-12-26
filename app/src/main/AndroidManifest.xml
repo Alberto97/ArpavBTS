@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.alberto97.arpavbts">
+
+    <application android:allowBackup="true"
+                 android:label="@string/app_name"
+                 android:icon="@mipmap/ic_launcher"
+                 android:supportsRtl="true"
+                 android:usesCleartextTraffic="true"
+                 android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MapActivity" />
+
+        <!-- TODO: Change key!-->
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyDHtcRWl7aSQConKG8MmPxE2EFFIg4kebU" />
+    </application>
+</manifest>
