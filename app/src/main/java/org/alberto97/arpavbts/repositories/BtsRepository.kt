@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.repositories
 
 import android.app.Application
 import android.util.Log
@@ -6,6 +6,7 @@ import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.protobuf.ProtoBuf
 import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.BTSList
+import org.alberto97.arpavbts.tools.ArpavApi
 import java.io.File
 
 interface IBtsRepository {
@@ -14,7 +15,8 @@ interface IBtsRepository {
     fun get(gestore: String): List<BTSData>
 }
 
-class BtsRepository(val app: Application, private val arpavApi: ArpavApi) : IBtsRepository {
+class BtsRepository(val app: Application, private val arpavApi: ArpavApi) :
+    IBtsRepository {
     private val fileName = "impianti.pb"
     private var btsList: List<BTSData>
 

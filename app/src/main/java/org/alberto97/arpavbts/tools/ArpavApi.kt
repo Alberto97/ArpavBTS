@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.tools
 
 import org.alberto97.arpavbts.models.arpav.FeatureCollection
 import retrofit2.Retrofit

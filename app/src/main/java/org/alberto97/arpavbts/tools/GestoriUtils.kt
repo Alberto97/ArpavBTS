@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.tools
 
 import android.graphics.Color
 import com.google.android.gms.maps.model.BitmapDescriptorFactory

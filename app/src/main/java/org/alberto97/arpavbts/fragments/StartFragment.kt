@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.serialization.UnstableDefault
 import org.alberto97.arpavbts.R
-import org.alberto97.arpavbts.StartViewModel
+import org.alberto97.arpavbts.viewmodels.StartViewModel
 import org.alberto97.arpavbts.databinding.FragmentStartBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

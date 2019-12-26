@@ -1,9 +1,9 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.alberto97.arpavbts.repositories.IBtsRepository
+import org.alberto97.arpavbts.tools.all
 import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.ClusterItemData
 

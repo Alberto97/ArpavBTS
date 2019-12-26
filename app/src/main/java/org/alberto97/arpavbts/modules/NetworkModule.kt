@@ -1,6 +1,6 @@
 package org.alberto97.arpavbts.modules
 
-import org.alberto97.arpavbts.ArpavApi
+import org.alberto97.arpavbts.tools.ArpavApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

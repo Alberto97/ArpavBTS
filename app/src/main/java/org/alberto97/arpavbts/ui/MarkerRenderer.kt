@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.ui
 
 import android.content.Context
 import com.google.android.gms.maps.GoogleMap
@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import org.alberto97.arpavbts.models.ClusterItemData
+import org.alberto97.arpavbts.tools.GestoriUtils
 
 class MarkerRenderer(context: Context, map: GoogleMap, clusterManager: ClusterManager<ClusterItemData>) :
     DefaultClusterRenderer<ClusterItemData>(context, map, clusterManager) {

@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.tools
 
 const val iliad = "ILIAD ITALIA S.p.A."
 const val tim = "TELECOM"

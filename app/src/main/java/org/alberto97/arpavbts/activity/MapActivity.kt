@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts
+package org.alberto97.arpavbts.activity
 
 import android.os.Bundle
 import android.view.Menu
@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import org.alberto97.arpavbts.activity.MapBaseActivity
+import org.alberto97.arpavbts.*
 import org.alberto97.arpavbts.adapters.BTSAdapter
 import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.ActivityMapBinding
@@ -21,9 +21,15 @@ import org.alberto97.arpavbts.models.BTSData
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.alberto97.arpavbts.tools.GestoreResult
+import org.alberto97.arpavbts.tools.GestoriUtils
+import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
+import org.alberto97.arpavbts.ui.MarkerRenderer
+import org.alberto97.arpavbts.viewmodels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResult,
+class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
+    GestoreResult,
     ClusterManager.OnClusterClickListener<ClusterItemData>, ClusterManager.OnClusterItemClickListener<ClusterItemData> {
 
     private lateinit var clusterManager: ClusterManager<ClusterItemData>
@@ -37,7 +43,9 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_map)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_map
+        )
         setSupportActionBar(binding.toolbar)
 
 
@@ -75,7 +83,12 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResu
         getMap().setOnMapClickListener(this)
 
         clusterManager = ClusterManager(this, getMap())
-        val renderer = MarkerRenderer(this, getMap(), clusterManager)
+        val renderer =
+            MarkerRenderer(
+                this,
+                getMap(),
+                clusterManager
+            )
         renderer.minClusterSize = 1
         clusterManager.renderer = renderer
         clusterManager.setOnClusterClickListener(this)
@@ -207,7 +220,8 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener, GestoreResu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_gestori -> {
-                GestoreBottomSheetDialog().showNow(supportFragmentManager, "")
+                GestoreBottomSheetDialog()
+                    .showNow(supportFragmentManager, "")
                 true
             }
             else ->

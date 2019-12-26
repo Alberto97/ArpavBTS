@@ -15,7 +15,7 @@
     </fragment>
     <activity
             android:id="@+id/mapActivity"
-            android:name="org.alberto97.arpavbts.MapActivity"
+            android:name="org.alberto97.arpavbts.activity.MapActivity"
             android:label="MapActivity"
             tools:layout="@layout/activity_map" />
 </navigation>
