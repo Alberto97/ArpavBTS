@@ -29,9 +29,6 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : I
     }
 
     override suspend fun updateBts() {
-        // Clear DB
-        clear()
-
         // Fetch new data
         val data = arpavApi.fetchData()
         val list = data.features.map {
@@ -50,6 +47,9 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : I
                 )
             }
         }
+
+        // Clear DB
+        clear()
 
         // Populate DB
         saveBts(list)

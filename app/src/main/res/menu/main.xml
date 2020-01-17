@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_gestori"
             android:icon="@drawable/ic_filter_list_white_24dp"
-            app:showAsAction="always"
-            android:title="Gestori"/>
+            app:showAsAction="ifRoom"
+            android:title="Filtra"/>
+
+    <item android:id="@+id/action_update"
+        app:showAsAction="never"
+        android:title="Aggiorna"/>
 
 <!--    <item android:id="@+id/action_clear"-->
 <!--            app:showAsAction="ifRoom"-->

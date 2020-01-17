@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="actionOverflowButtonStyle">@style/overflow</item>
+    </style>
+    
+    <style name="overflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="tint">#ffffff</item>
+    </style>
+
 </resources>

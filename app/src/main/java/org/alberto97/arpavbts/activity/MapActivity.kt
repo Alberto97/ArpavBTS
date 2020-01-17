@@ -228,6 +228,10 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
                     .showNow(supportFragmentManager, "")
                 true
             }
+            R.id.action_update -> {
+                viewModel.updateDb()
+                true
+            }
 //            R.id.action_clear -> {
 //                viewModel.clearDb()
 //                return true

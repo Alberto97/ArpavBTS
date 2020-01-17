@@ -26,12 +26,12 @@ class StartFragment : Fragment() {
         binding = FragmentStartBinding.inflate(inflater)
 
         binding.refresh.setOnClickListener {
-            viewModel.start()
+            //viewModel.start()
         }
 
         binding.gotToMap.setOnClickListener {
             //val dir = StartFragmentDirections.actionStartToMap()
-            findNavController().navigate(R.id.actionStartToMap)
+            //findNavController().navigate(R.id.actionStartToMap)
         }
 
         return binding.root

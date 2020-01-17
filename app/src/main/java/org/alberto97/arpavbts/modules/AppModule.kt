@@ -17,9 +17,6 @@ val appModule = module {
 
     single<IGestoriUtils> { GestoriUtils() }
 
-    // ViewModel for Search View
-    viewModel { MapViewModel(get()) }
-
-    // ViewModel for Result View
-    viewModel { StartViewModel(get()) }
+    viewModel { MapViewModel(get(), get()) }
+    viewModel { StartViewModel() }
 }

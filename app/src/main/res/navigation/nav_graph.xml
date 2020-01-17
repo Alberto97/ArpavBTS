@@ -2,17 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
         xmlns:tools="http://schemas.android.com/tools"
-        app:startDestination="@id/startFragment">
+        app:startDestination="@id/mapActivity">
 
-    <fragment
-            android:id="@+id/startFragment"
-            android:name="org.alberto97.arpavbts.fragments.StartFragment"
-            android:label="StartFragment"
-            tools:layout="@layout/fragment_start">
-        <action
-                android:id="@+id/actionStartToMap"
-                app:destination="@id/mapActivity" />
-    </fragment>
     <activity
             android:id="@+id/mapActivity"
             android:name="org.alberto97.arpavbts.activity.MapActivity"
