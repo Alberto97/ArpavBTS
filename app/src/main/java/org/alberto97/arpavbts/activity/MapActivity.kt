@@ -236,14 +236,6 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
                 viewModel.updateDb()
                 true
             }
-//            R.id.action_clear -> {
-//                viewModel.clearDb()
-//                return true
-//            }
-//            R.id.action_update -> {
-//                viewModel.updateDb()
-//                return true
-//            }
             else ->
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

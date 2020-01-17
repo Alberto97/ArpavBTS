@@ -36,18 +36,6 @@ class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : 
         _carrierInput.value = id
     }
 
-//    fun clearDb() {
-//        viewModelScope.launch {
-//            btsRepo.clear()
-//        }
-//    }
-//
-//    fun updateDb() {
-//        viewModelScope.launch {
-//            btsRepo.updateBts()
-//        }
-//    }
-
     private fun createChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val channel = NotificationChannel("bts_updates", "Aggiornamenti", NotificationManager.IMPORTANCE_LOW)
