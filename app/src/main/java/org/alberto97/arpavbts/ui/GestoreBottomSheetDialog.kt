@@ -29,13 +29,16 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
             //getItem("Altri", others)
         )
 
-        val rec = binding.recyclerView
-        rec.adapter = GestoreAdapter(list) {
-            (activity as GestoreResult).onGestoreResult(it.id)
-            this.dismiss()
-        }
+        val adapter = GestoreAdapter() { gestore -> onGestoreClick(gestore) }
+        binding.recyclerView.adapter = adapter
+        adapter.submitList(list)
 
         return binding.root
+    }
+
+    private fun onGestoreClick(data: GestoreAdapterItem) {
+        (activity as GestoreResult).onGestoreResult(data.id)
+        this.dismiss()
     }
 
     private fun getItem(name: String, id: String): GestoreAdapterItem {

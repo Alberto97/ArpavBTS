@@ -42,6 +42,8 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
     private lateinit var binding: ActivityMapBinding
     private val viewModel: MapViewModel by viewModel()
 
+    private var clusterBts = listOf<ClusterItemData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,
@@ -68,6 +70,9 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         viewModel.btsList.observe(this, Observer<List<ClusterItemData>> {
             setMarkers(it)
         })
+
+        binding.btsRecyclerView.adapter = BTSAdapter()
+        binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
     }
 
     private fun setMarkers(btsList: List<ClusterItemData>) {
@@ -133,28 +138,28 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
     }
 
     private fun setGestoreBottom(data: List<ClusterItemData>) {
+        clusterBts = data
         hideBtsBottomBehavior()
         showGestoreBottomBehavior()
 
         val utils = GestoriUtils()
-        val list = arrayListOf<GestoreAdapterItem>()
-        data.forEach{
-            list.add(
-                GestoreAdapterItem(
-                    utils.getColor(it.data.gestore),
-                    it.data.nome,
-                    it.data.idImpianto.toString()
-                )
+        val list = data.map {
+            GestoreAdapterItem(
+                utils.getColor(it.data.gestore),
+                it.data.nome,
+                it.data.idImpianto.toString()
             )
         }
 
-        // TODO: Properly initialize
-        binding.gestoreRecyclerView.adapter = GestoreAdapter(list) { out ->
-            val bts = data.find { it.data.idImpianto == out.id.toInt()}
-            hideGestoreBottomBehavior()
-            bts ?: return@GestoreAdapter
-            setBtsBottom(bts.data)
-        }
+        val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
+        adapter.submitList(list)
+    }
+
+    private fun onBtsClick(out: GestoreAdapterItem) {
+        val bts = clusterBts.find { it.data.idImpianto == out.id.toInt()}
+        hideGestoreBottomBehavior()
+        bts ?: return
+        setBtsBottom(bts.data)
     }
 
     private fun setBtsBottom(data: Bts) {
@@ -178,9 +183,8 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
 
         // Remove missing infos
         val list = tempList.filter { !it.text.isNullOrEmpty() && it.text != "NO DATA" }
-
-        // TODO: Properly initialize
-        binding.btsRecyclerView.adapter = BTSAdapter(list)
+        val adapter = binding.btsRecyclerView.adapter as BTSAdapter
+        adapter.submitList(list)
 
         // Position
         /*bts_position.setOnClickListener {
