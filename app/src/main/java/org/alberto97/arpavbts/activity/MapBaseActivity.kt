@@ -3,7 +3,6 @@ package org.alberto97.arpavbts.activity
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.Marker
 
 abstract class MapBaseActivity : AppCompatActivity(), OnMapReadyCallback {
 

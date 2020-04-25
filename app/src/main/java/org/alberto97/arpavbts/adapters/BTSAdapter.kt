@@ -27,13 +27,13 @@ private class BTSDetailsDiff : DiffUtil.ItemCallback<BTSDetailsAdapterItem>() {
         oldItem: BTSDetailsAdapterItem,
         newItem: BTSDetailsAdapterItem
     ): Boolean {
-        return oldItem.text == newItem.text;
+        return oldItem.text == newItem.text
     }
 
     override fun areContentsTheSame(
         oldItem: BTSDetailsAdapterItem,
         newItem: BTSDetailsAdapterItem
     ): Boolean {
-        return oldItem.text == newItem.text;
+        return oldItem.text == newItem.text
     }
 }

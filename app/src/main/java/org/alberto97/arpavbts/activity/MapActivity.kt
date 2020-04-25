@@ -67,7 +67,7 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         gestoreBehavior.isHideable = true
         hideGestoreBottomBehavior()
 
-        viewModel.btsList.observe(this, Observer<List<ClusterItemData>> {
+        viewModel.btsList.observe(this, Observer {
             setMarkers(it)
         })
 

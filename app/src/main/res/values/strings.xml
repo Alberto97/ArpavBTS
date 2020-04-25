@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Arpav BTS</string>
+    <string name="bts_cluster_title">BTS in questo cluster</string>
 </resources>
