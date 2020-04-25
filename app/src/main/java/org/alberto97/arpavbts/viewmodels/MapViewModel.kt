@@ -32,6 +32,16 @@ class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : 
         list -> list.map { ClusterItemData(it) }
     }
 
+    init{
+        viewModelScope.launch {
+            val isEmpty = withContext(Dispatchers.IO) {
+                btsRepo.isEmpty()
+            }
+            if (isEmpty)
+                updateDb()
+        }
+    }
+
     fun getBtsByCarrier(id: String) {
         _carrierInput.value = id
     }

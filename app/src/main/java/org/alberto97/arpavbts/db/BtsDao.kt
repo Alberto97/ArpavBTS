@@ -15,4 +15,7 @@ interface BtsDao {
 
     @Query("DELETE FROM bts")
     suspend fun deleteAll()
+
+    @Query("SELECT NOT EXISTS(SELECT 1 FROM bts LIMIT 1)")
+    fun isEmpty(): Boolean
 }

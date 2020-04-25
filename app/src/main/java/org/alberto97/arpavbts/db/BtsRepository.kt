@@ -7,18 +7,15 @@ interface IBtsRepository {
     suspend fun saveBts(bts: List<Bts>)
     suspend fun clear()
     fun getBts(gestore: String? = null): LiveData<List<Bts>>
+    fun isEmpty(): Boolean
     suspend fun updateBts()
 }
 
 class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : IBtsRepository {
 
-    override suspend fun saveBts(bts: List<Bts>) {
-        dao.insert(bts)
-    }
+    override suspend fun saveBts(bts: List<Bts>) = dao.insert(bts)
 
-    override suspend fun clear() {
-        dao.deleteAll()
-    }
+    override suspend fun clear() = dao.deleteAll()
 
     override fun getBts(gestore: String?): LiveData<List<Bts>> {
         return if (gestore != null) {
@@ -27,6 +24,8 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : I
             dao.getBts()
         }
     }
+
+    override fun isEmpty() = dao.isEmpty()
 
     override suspend fun updateBts() {
         // Fetch new data
