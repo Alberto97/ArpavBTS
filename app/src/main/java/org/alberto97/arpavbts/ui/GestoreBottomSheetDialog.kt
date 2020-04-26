@@ -1,5 +1,7 @@
 package org.alberto97.arpavbts.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import org.alberto97.arpavbts.databinding.DialogGestoreBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.*
 
+const val SHEET_SELECTED_GESTORE_ID = "GestoreId"
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -37,7 +40,9 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private fun onGestoreClick(data: GestoreAdapterItem) {
-        (activity as GestoreResult).onGestoreResult(data.id)
+        val intent = Intent()
+        intent.putExtra(SHEET_SELECTED_GESTORE_ID, data.id)
+        targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
         this.dismiss()
     }
 

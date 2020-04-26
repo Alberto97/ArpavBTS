@@ -2,11 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
         xmlns:tools="http://schemas.android.com/tools"
-        app:startDestination="@id/mapActivity">
-
-    <activity
-            android:id="@+id/mapActivity"
-            android:name="org.alberto97.arpavbts.activity.MapActivity"
-            android:label="MapActivity"
-            tools:layout="@layout/activity_map" />
+        app:startDestination="@id/mapFragment">
+    <fragment
+            android:id="@+id/mapFragment"
+            android:name="org.alberto97.arpavbts.fragments.MapFragment"
+            android:label="MapFragment"
+            tools:layout="@layout/fragment_map" />
 </navigation>

@@ -1,14 +1,13 @@
-package org.alberto97.arpavbts.activity
+package org.alberto97.arpavbts.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.LinearLayout
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
@@ -16,46 +15,41 @@ import com.google.maps.android.clustering.ClusterManager
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.BTSAdapter
 import org.alberto97.arpavbts.adapters.GestoreAdapter
-import org.alberto97.arpavbts.databinding.ActivityMapBinding
+import org.alberto97.arpavbts.databinding.FragmentMapBinding
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.tools.GestoreResult
 import org.alberto97.arpavbts.tools.GestoriUtils
 import org.alberto97.arpavbts.tools.all
+import org.alberto97.arpavbts.ui.SHEET_SELECTED_GESTORE_ID
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
-    GestoreResult,
-    ClusterManager.OnClusterClickListener<ClusterItemData>, ClusterManager.OnClusterItemClickListener<ClusterItemData> {
+class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
+    GoogleMap.OnMapClickListener,
+    ClusterManager.OnClusterClickListener<ClusterItemData>,
+    ClusterManager.OnClusterItemClickListener<ClusterItemData> {
 
-    private lateinit var clusterManager: ClusterManager<ClusterItemData>
+    private val viewModel: MapViewModel by viewModel()
+    private lateinit var binding: FragmentMapBinding
 
     // Bottom Behavior
     private lateinit var btsBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var gestoreBehavior: BottomSheetBehavior<LinearLayout>
 
-    private lateinit var binding: ActivityMapBinding
-    private val viewModel: MapViewModel by viewModel()
+    private val clusterBts = arrayListOf<ClusterItemData>()
 
-    private var clusterBts = listOf<ClusterItemData>()
+    private val selectGestoreRequestCode = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_map
-        )
-        setSupportActionBar(binding.toolbar)
-
-
-        val mapFragment =
-            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentMapBinding.inflate(inflater)
 
         btsBehavior = BottomSheetBehavior.from(binding.btsBottomSheet)
         btsBehavior.peekHeight = 0
@@ -67,35 +61,46 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         gestoreBehavior.isHideable = true
         hideGestoreBottomBehavior()
 
-        viewModel.btsList.observe(this, Observer {
-            setMarkers(it)
-        })
-
         binding.btsRecyclerView.adapter = BTSAdapter()
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
+
+        return binding.root
     }
 
+    override fun getToolbar() = binding.toolbar
+    override fun getMenuResource() = R.menu.main
+
     private fun setMarkers(btsList: List<ClusterItemData>) {
-        if (!this::clusterManager.isInitialized) return
-        with(clusterManager) {
+        with(getClusterManager()) {
             clearItems()
             addItems(btsList)
             cluster() // Draw clusters
         }
     }
 
-    override fun onMapReady() {
-        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(45.6736317,11.9941753), 7f))
-        getMap().setOnMapClickListener(this)
+    override fun getMapView() = binding.map
 
-        clusterManager = ClusterManager(this, getMap())
-        val renderer = MarkerRenderer(this, getMap(), clusterManager)
+    override fun onMapReady() {
+        super.onMapReady()
+
+        viewModel.btsList.observe(viewLifecycleOwner, Observer {
+            setMarkers(it)
+        })
+
+        // Setup custom marker renderer for multiple marker colors
+        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager())
         renderer.minClusterSize = 1
-        clusterManager.renderer = renderer
-        clusterManager.setOnClusterClickListener(this)
-        clusterManager.setOnClusterItemClickListener(this)
-        getMap().setOnCameraIdleListener(clusterManager)
-        getMap().setOnMarkerClickListener(clusterManager)
+        getClusterManager().renderer = renderer
+
+        // Move camera to Veneto
+        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(45.6736317,11.9941753), 7f))
+
+        // Setup various listeners
+        getClusterManager().setOnClusterClickListener(this)
+        getClusterManager().setOnClusterItemClickListener(this)
+        getMap().setOnCameraIdleListener(getClusterManager())
+        getMap().setOnMarkerClickListener(getClusterManager())
+        getMap().setOnMapClickListener(this)
 
         // Fetch data
         onGestoreResult(all)
@@ -104,6 +109,18 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
     override fun onMapClick(p0: LatLng?) {
         hideBtsBottomBehavior()
         hideGestoreBottomBehavior()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == selectGestoreRequestCode && resultCode == Activity.RESULT_OK) {
+            val id = data?.getStringExtra(SHEET_SELECTED_GESTORE_ID) ?: return
+            onGestoreResult(id)
+        }
+    }
+
+    private fun onGestoreResult(id: String) {
+        viewModel.getBtsByCarrier(id)
     }
 
     override fun onClusterClick(cluster: Cluster<ClusterItemData>?): Boolean {
@@ -121,24 +138,22 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         return true
     }
 
-    override fun onClusterItemClick(marker: ClusterItemData?): Boolean {
-        marker ?: return false
-        getMap().animateCamera(CameraUpdateFactory.newLatLng(marker.position))
+    override fun onClusterItemClick(item: ClusterItemData?): Boolean {
+        item ?: return false
+        getMap().animateCamera(CameraUpdateFactory.newLatLng(item.position))
 
         // If there's a title, cluster is a marker
-        if (marker.title.isNotEmpty()) {
-            setBtsBottom(marker.data)
+        if (item.title.isNotEmpty()) {
+            setBtsBottom(item.data)
         }
 
         return true
     }
 
-    override fun onGestoreResult(id: String) {
-        viewModel.getBtsByCarrier(id)
-    }
-
     private fun setGestoreBottom(data: List<ClusterItemData>) {
-        clusterBts = data
+        clusterBts.clear()
+        clusterBts.addAll(data)
+
         hideBtsBottomBehavior()
         showGestoreBottomBehavior()
 
@@ -220,16 +235,12 @@ class MapActivity : MapBaseActivity(), GoogleMap.OnMapClickListener,
         gestoreBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_gestori -> {
-                GestoreBottomSheetDialog()
-                    .showNow(supportFragmentManager, "")
+                val dialog = GestoreBottomSheetDialog()
+                dialog.setTargetFragment(this, selectGestoreRequestCode)
+                dialog.showNow(parentFragmentManager, "")
                 true
             }
             R.id.action_update -> {

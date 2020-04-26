@@ -32,7 +32,7 @@ class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : 
         list -> list.map { ClusterItemData(it) }
     }
 
-    init{
+    init {
         viewModelScope.launch {
             val isEmpty = withContext(Dispatchers.IO) {
                 btsRepo.isEmpty()
