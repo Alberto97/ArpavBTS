@@ -60,13 +60,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     }
 
     private fun btsBottomSheetSetup() {
-        // Bottom sheet
         btsBehavior = BottomSheetBehavior.from(binding.btsBottomSheet)
-        btsBehavior.peekHeight = 0
-        btsBehavior.isHideable = true
-        hideBtsBottomBehavior()
-
-        // Adapter
         binding.btsRecyclerView.adapter = BTSAdapter()
 
         // Title
@@ -82,13 +76,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     }
 
     private fun gestoreBottomSheetSetup() {
-        // Bottom sheet
         gestoreBehavior = BottomSheetBehavior.from(binding.gestoreBottomSheet)
-        gestoreBehavior.peekHeight = 0
-        gestoreBehavior.isHideable = true
-        hideGestoreBottomBehavior()
-
-        // Adapter
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
 
         // Recyclerview refresh
@@ -138,8 +126,8 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     }
 
     override fun onMapClick(p0: LatLng?) {
-        hideBtsBottomBehavior()
-        hideGestoreBottomBehavior()
+        showBtsBottomBehavior(false)
+        showGestoreBottomBehavior(false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -185,27 +173,27 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         clusterBts.clear()
         clusterBts.addAll(data)
 
-        hideBtsBottomBehavior()
+        showBtsBottomBehavior(false)
         viewModel.setGestoreData(data)
 
         Handler().postDelayed({
-            showGestoreBottomBehavior()
+            showGestoreBottomBehavior(true)
         }, 500)
     }
 
     private fun onBtsClick(out: GestoreAdapterItem) {
         val bts = clusterBts.find { it.data.idImpianto == out.id.toInt()}
-        hideGestoreBottomBehavior()
+        showGestoreBottomBehavior(false)
         bts ?: return
         setBtsBottom(bts.data)
     }
 
     private fun setBtsBottom(data: Bts) {
-        hideGestoreBottomBehavior()
+        showGestoreBottomBehavior(false)
         viewModel.setBtsData(data)
 
         Handler().postDelayed({
-            showBtsBottomBehavior()
+            showBtsBottomBehavior(true)
         }, 500)
 
         // Position
@@ -224,22 +212,20 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
     }
 
-    private fun hideBtsBottomBehavior() {
-        btsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        btsBehavior.peekHeight = 0
+    private fun showBtsBottomBehavior(show: Boolean) {
+        btsBehavior.state = if (show) {
+            BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            BottomSheetBehavior.STATE_HIDDEN
+        }
     }
 
-    private fun hideGestoreBottomBehavior() {
-        gestoreBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        gestoreBehavior.peekHeight = 0
-    }
-
-    private fun showBtsBottomBehavior() {
-        btsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    private fun showGestoreBottomBehavior() {
-        gestoreBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    private fun showGestoreBottomBehavior(show: Boolean) {
+        gestoreBehavior.state = if (show) {
+            BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            BottomSheetBehavior.STATE_HIDDEN
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
