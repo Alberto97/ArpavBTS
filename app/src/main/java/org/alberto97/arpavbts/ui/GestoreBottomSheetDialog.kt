@@ -32,7 +32,7 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
             //getItem("Altri", others)
         )
 
-        val adapter = GestoreAdapter() { gestore -> onGestoreClick(gestore) }
+        val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }
         binding.recyclerView.adapter = adapter
         adapter.submitList(list)
 
