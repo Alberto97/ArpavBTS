@@ -3,6 +3,7 @@ package org.alberto97.arpavbts.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -186,7 +187,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
         hideBtsBottomBehavior()
         viewModel.setGestoreData(data)
-        showGestoreBottomBehavior()
+
+        Handler().postDelayed({
+            showGestoreBottomBehavior()
+        }, 500)
     }
 
     private fun onBtsClick(out: GestoreAdapterItem) {
@@ -199,7 +203,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     private fun setBtsBottom(data: Bts) {
         hideGestoreBottomBehavior()
         viewModel.setBtsData(data)
-        showBtsBottomBehavior()
+
+        Handler().postDelayed({
+            showBtsBottomBehavior()
+        }, 500)
 
         // Position
         /*bts_position.setOnClickListener {
