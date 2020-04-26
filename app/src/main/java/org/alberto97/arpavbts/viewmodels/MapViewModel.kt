@@ -14,10 +14,16 @@ import kotlinx.coroutines.withContext
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.db.IBtsRepository
+import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
+import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.alberto97.arpavbts.tools.IGestoriUtils
 import org.alberto97.arpavbts.tools.carrierNameById
 
-class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : AndroidViewModel(app) {
+class MapViewModel(
+    val app: Application,
+    private val btsRepo: IBtsRepository,
+    private val gestoriUtils: IGestoriUtils) : AndroidViewModel(app) {
 
     private val notificationManager = app.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val notificationId = 1
@@ -32,6 +38,10 @@ class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : 
         list -> list.map { ClusterItemData(it) }
     }
 
+    val btsDataTitle = MutableLiveData<String>()
+    val btsData = MutableLiveData<List<BTSDetailsAdapterItem>>()
+    val gestoreData = MutableLiveData<List<GestoreAdapterItem>>()
+
     init {
         viewModelScope.launch {
             val isEmpty = withContext(Dispatchers.IO) {
@@ -44,6 +54,37 @@ class MapViewModel(val app: Application, private val btsRepo: IBtsRepository) : 
 
     fun getBtsByCarrier(id: String) {
         _carrierInput.value = id
+    }
+
+    fun setBtsData(data: Bts) {
+        btsDataTitle.value = data.nome
+
+        val tempList = arrayListOf(
+            BTSDetailsAdapterItem(R.drawable.ic_code_black_24dp, data.codice),
+            BTSDetailsAdapterItem(R.drawable.ic_person_black_24dp, data.gestore),
+            BTSDetailsAdapterItem(R.drawable.ic_terrain_black_24dp, "${data.quotaSlm} m"),
+            BTSDetailsAdapterItem(R.drawable.ic_place_black_24dp, data.indirizzo),
+            BTSDetailsAdapterItem(R.drawable.ic_find_in_page_black_24dp, data.postazione),
+            BTSDetailsAdapterItem(
+                R.drawable.ic_settings_input_antenna_black_24dp,
+                data.pontiRadio
+            )
+        )
+
+        // Remove missing infos
+        val list = tempList.filter { !it.text.isNullOrEmpty() && it.text != "NO DATA" }
+        btsData.value = list
+    }
+
+    fun setGestoreData(data: List<ClusterItemData>) {
+        val list = data.map {
+            GestoreAdapterItem(
+                gestoriUtils.getColor(it.data.gestore),
+                it.data.nome,
+                it.data.idImpianto.toString()
+            )
+        }
+        gestoreData.value = list
     }
 
     private fun createChannel() {

@@ -3,7 +3,10 @@ package org.alberto97.arpavbts.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,14 +20,12 @@ import org.alberto97.arpavbts.adapters.BTSAdapter
 import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.FragmentMapBinding
 import org.alberto97.arpavbts.db.Bts
-import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.tools.GestoriUtils
 import org.alberto97.arpavbts.tools.all
-import org.alberto97.arpavbts.ui.SHEET_SELECTED_GESTORE_ID
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
+import org.alberto97.arpavbts.ui.SHEET_SELECTED_GESTORE_ID
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,20 +52,49 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     ): View? {
         binding = FragmentMapBinding.inflate(inflater)
 
+        btsBottomSheetSetup()
+        gestoreBottomSheetSetup()
+
+        return binding.root
+    }
+
+    private fun btsBottomSheetSetup() {
+        // Bottom sheet
         btsBehavior = BottomSheetBehavior.from(binding.btsBottomSheet)
         btsBehavior.peekHeight = 0
         btsBehavior.isHideable = true
         hideBtsBottomBehavior()
 
+        // Adapter
+        binding.btsRecyclerView.adapter = BTSAdapter()
+
+        // Title
+        viewModel.btsDataTitle.observe(viewLifecycleOwner, Observer {
+            binding.btsName.text = it
+        })
+
+        // Recyclerview refresh
+        viewModel.btsData.observe(viewLifecycleOwner, Observer {
+            val adapter = binding.btsRecyclerView.adapter as BTSAdapter
+            adapter.submitList(it)
+        })
+    }
+
+    private fun gestoreBottomSheetSetup() {
+        // Bottom sheet
         gestoreBehavior = BottomSheetBehavior.from(binding.gestoreBottomSheet)
         gestoreBehavior.peekHeight = 0
         gestoreBehavior.isHideable = true
         hideGestoreBottomBehavior()
 
-        binding.btsRecyclerView.adapter = BTSAdapter()
+        // Adapter
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
 
-        return binding.root
+        // Recyclerview refresh
+        viewModel.gestoreData.observe(viewLifecycleOwner, Observer {
+            val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
+            adapter.submitList(it)
+        })
     }
 
     override fun getToolbar() = binding.toolbar
@@ -155,19 +185,8 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         clusterBts.addAll(data)
 
         hideBtsBottomBehavior()
+        viewModel.setGestoreData(data)
         showGestoreBottomBehavior()
-
-        val utils = GestoriUtils()
-        val list = data.map {
-            GestoreAdapterItem(
-                utils.getColor(it.data.gestore),
-                it.data.nome,
-                it.data.idImpianto.toString()
-            )
-        }
-
-        val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
-        adapter.submitList(list)
     }
 
     private fun onBtsClick(out: GestoreAdapterItem) {
@@ -179,27 +198,8 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
     private fun setBtsBottom(data: Bts) {
         hideGestoreBottomBehavior()
+        viewModel.setBtsData(data)
         showBtsBottomBehavior()
-
-        // Bottom bar setup
-        binding.btsName.text = data.nome
-
-        val tempList = arrayListOf(
-            BTSDetailsAdapterItem(R.drawable.ic_code_black_24dp, data.codice),
-            BTSDetailsAdapterItem(R.drawable.ic_person_black_24dp, data.gestore),
-            BTSDetailsAdapterItem(R.drawable.ic_terrain_black_24dp, "${data.quotaSlm} m"),
-            BTSDetailsAdapterItem(R.drawable.ic_place_black_24dp, data.indirizzo),
-            BTSDetailsAdapterItem(R.drawable.ic_find_in_page_black_24dp, data.postazione),
-            BTSDetailsAdapterItem(
-                R.drawable.ic_settings_input_antenna_black_24dp,
-                data.pontiRadio
-            )
-        )
-
-        // Remove missing infos
-        val list = tempList.filter { !it.text.isNullOrEmpty() && it.text != "NO DATA" }
-        val adapter = binding.btsRecyclerView.adapter as BTSAdapter
-        adapter.submitList(list)
 
         // Position
         /*bts_position.setOnClickListener {

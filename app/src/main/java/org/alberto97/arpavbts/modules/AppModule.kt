@@ -17,6 +17,6 @@ val appModule = module {
 
     single<IGestoriUtils> { GestoriUtils() }
 
-    viewModel { MapViewModel(get(), get()) }
+    viewModel { MapViewModel(get(), get(), get()) }
     viewModel { StartViewModel() }
 }
