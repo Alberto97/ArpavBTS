@@ -1,19 +1,34 @@
 package org.alberto97.arpavbts.db
 
+import android.content.Context
+import android.preference.PreferenceManager
 import androidx.lifecycle.LiveData
 import org.alberto97.arpavbts.tools.ArpavApi
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
 
 interface IBtsRepository {
     suspend fun saveBts(bts: List<Bts>)
     suspend fun clear()
     fun getBts(gestore: String? = null): LiveData<List<Bts>>
-    fun isEmpty(): Boolean
+    suspend fun updateBtsIfOldOrEmpty()
     suspend fun updateBts()
 }
 
-class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : IBtsRepository {
+object SharedPreferenceConstants {
+    const val LAST_DB_UPDATE = "last_db_update"
+}
+class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi, private val context: Context) : IBtsRepository {
 
-    override suspend fun saveBts(bts: List<Bts>) = dao.insert(bts)
+    override suspend fun saveBts(bts: List<Bts>) {
+        dao.insert(bts)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        with (prefs.edit()) {
+            putLong(SharedPreferenceConstants.LAST_DB_UPDATE, System.currentTimeMillis())
+            commit()
+        }
+    }
 
     override suspend fun clear() = dao.deleteAll()
 
@@ -25,7 +40,18 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi) : I
         }
     }
 
-    override fun isEmpty() = dao.isEmpty()
+    @ExperimentalTime
+    override suspend fun updateBtsIfOldOrEmpty() {
+        val isEmpty = dao.isEmpty()
+        if (!isEmpty) {
+            // Don't update until at least one day has passed since the last data fetch
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val lastUpdateMillis = prefs.getLong(SharedPreferenceConstants.LAST_DB_UPDATE, 0)
+            val duration = (System.currentTimeMillis() - lastUpdateMillis).toDuration(DurationUnit.MILLISECONDS)
+            if (duration.inDays < 1) return
+        }
+        updateBts()
+    }
 
     override suspend fun updateBts() {
         // Fetch new data

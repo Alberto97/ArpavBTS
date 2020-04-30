@@ -237,7 +237,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
                 true
             }
             R.id.action_update -> {
-                viewModel.updateDb()
+                viewModel.updateDb(forceUpdate = true)
                 true
             }
             else ->

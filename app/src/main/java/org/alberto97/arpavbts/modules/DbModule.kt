@@ -5,12 +5,13 @@ import androidx.room.Room
 import org.alberto97.arpavbts.db.AppDatabase
 import org.alberto97.arpavbts.db.BtsRepository
 import org.alberto97.arpavbts.db.IBtsRepository
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val dbModule = module {
     single { provideAppDb(get()) }
     single { get<AppDatabase>().btsDao() }
-    single<IBtsRepository> { BtsRepository(get(), get()) }
+    single<IBtsRepository> { BtsRepository(get(), get(), androidContext()) }
 }
 
 fun provideAppDb(context: Context): AppDatabase =

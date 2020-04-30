@@ -44,11 +44,7 @@ class MapViewModel(
 
     init {
         viewModelScope.launch {
-            val isEmpty = withContext(Dispatchers.IO) {
-                btsRepo.isEmpty()
-            }
-            if (isEmpty)
-                updateDb()
+            updateDb()
         }
     }
 
@@ -93,7 +89,7 @@ class MapViewModel(
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun updateDb() {
+    fun updateDb(forceUpdate: Boolean = false) {
         createChannel()
         val notificationBuilder = NotificationCompat.Builder(app, "bts_updates")
             .setSmallIcon(R.drawable.ic_bts_white)
@@ -106,7 +102,11 @@ class MapViewModel(
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                btsRepo.updateBts()
+                if (forceUpdate) {
+                    btsRepo.updateBts()
+                } else {
+                    btsRepo.updateBtsIfOldOrEmpty()
+                }
             }
             withContext(Dispatchers.Main) {
                 notificationManager.cancel(notificationId)
