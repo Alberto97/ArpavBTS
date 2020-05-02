@@ -9,6 +9,10 @@
         app:showAsAction="never"
         android:title="Aggiorna"/>
 
+    <item android:id="@+id/action_about"
+        app:showAsAction="never"
+        android:title="Info"/>
+
 <!--    <item android:id="@+id/action_clear"-->
 <!--            app:showAsAction="ifRoom"-->
 <!--            android:title="Clear"/>-->

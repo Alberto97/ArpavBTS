@@ -7,5 +7,13 @@
             android:id="@+id/mapFragment"
             android:name="org.alberto97.arpavbts.fragments.MapFragment"
             android:label="MapFragment"
-            tools:layout="@layout/fragment_map" />
+            tools:layout="@layout/fragment_map" >
+        <action
+                android:id="@+id/action_map_to_about"
+                app:destination="@id/aboutFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/aboutFragment"
+            android:name="org.alberto97.arpavbts.fragments.AboutFragment"
+            android:label="AboutFragment" />
 </navigation>

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -238,6 +239,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
             }
             R.id.action_update -> {
                 viewModel.updateDb(forceUpdate = true)
+                true
+            }
+            R.id.action_about -> {
+                findNavController().navigate(R.id.action_map_to_about)
                 true
             }
             else ->

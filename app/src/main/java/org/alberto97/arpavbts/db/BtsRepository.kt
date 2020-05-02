@@ -14,6 +14,7 @@ interface IBtsRepository {
     fun getBts(gestore: String? = null): LiveData<List<Bts>>
     suspend fun updateBtsIfOldOrEmpty()
     suspend fun updateBts()
+    fun getLastDbUpdate(): Long
 }
 
 object SharedPreferenceConstants {
@@ -40,13 +41,17 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi, pri
         }
     }
 
+    override fun getLastDbUpdate(): Long {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getLong(SharedPreferenceConstants.LAST_DB_UPDATE, 0)
+    }
+
     @ExperimentalTime
     override suspend fun updateBtsIfOldOrEmpty() {
         val isEmpty = dao.isEmpty()
         if (!isEmpty) {
             // Don't update until at least one day has passed since the last data fetch
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val lastUpdateMillis = prefs.getLong(SharedPreferenceConstants.LAST_DB_UPDATE, 0)
+            val lastUpdateMillis = getLastDbUpdate()
             val duration = (System.currentTimeMillis() - lastUpdateMillis).toDuration(DurationUnit.MILLISECONDS)
             if (duration.inDays < 1) return
         }

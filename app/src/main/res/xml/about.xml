@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <org.alberto97.arpavbts.ui.PreferenceHeader />
+    <Preference
+            android:key="arpav"
+            android:title="Dati forniti da Arpa Veneto">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.arpa.veneto.it/" />
+    </Preference>
+
+    <PreferenceCategory android:title="Informazioni app">
+
+        <Preference
+                android:key="author"
+                android:title="Autore"
+                android:summary="Alberto Pedron">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/Alberto97" />
+        </Preference>
+
+        <Preference
+                android:key="version"
+                android:title="Versione"
+                android:summary="placeholder">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/Alberto97/arpavbts" />
+        </Preference>
+
+        <Preference
+                android:key="db_version"
+                android:title="Ultimo aggiornamento database"
+                android:summary="placeholder"
+                android:selectable="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
