@@ -12,7 +12,7 @@
     <string name="bts_action_filter">Filter</string>
     <string name="bts_action_update">Update</string>
     <string name="bts_action_about">@string/about_title</string>
-    <string name="bts_cluster_title">BTS in this cluster</string>
+    <string name="bts_cluster_title">Towers in this cluster</string>
 
     <!-- Provider -->
     <string name="provider_pick">Pick provider</string>

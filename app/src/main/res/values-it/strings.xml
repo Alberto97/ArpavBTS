@@ -3,7 +3,7 @@
     <string name="bts_action_filter">Filtra</string>
     <string name="bts_action_update">Aggiorna</string>
     <string name="bts_action_about">Info</string>
-    <string name="bts_cluster_title">BTS in questo cluster</string>
+    <string name="bts_cluster_title">Torri in questo cluster</string>
 
     <!-- Provider -->
     <string name="provider_pick">Scegli gestore</string>
