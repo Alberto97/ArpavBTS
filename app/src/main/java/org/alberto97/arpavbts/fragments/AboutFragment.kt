@@ -27,7 +27,7 @@ class AboutFragment : ToolbarPreferenceFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getToolbar()?.title = "Informazioni"
+        getToolbar()?.title = getString(R.string.about_title)
         getToolbar()?.setDisplayHomeAsUpEnabled(true)
     }
 }

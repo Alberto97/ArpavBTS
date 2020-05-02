@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_gestori"
+    <item android:id="@+id/action_providers"
             android:icon="@drawable/ic_filter_list_white_24dp"
             app:showAsAction="ifRoom"
-            android:title="Filtra"/>
+            android:title="@string/bts_action_filter"/>
 
     <item android:id="@+id/action_update"
         app:showAsAction="never"
-        android:title="Aggiorna"/>
+        android:title="@string/bts_action_update"/>
 
     <item android:id="@+id/action_about"
         app:showAsAction="never"
-        android:title="Info"/>
-
-<!--    <item android:id="@+id/action_clear"-->
-<!--            app:showAsAction="ifRoom"-->
-<!--            android:title="Clear"/>-->
-<!--    <item android:id="@+id/action_update"-->
-<!--            app:showAsAction="ifRoom"-->
-<!--            android:title="Update"/>-->
+        android:title="@string/bts_action_about"/>
 </menu>

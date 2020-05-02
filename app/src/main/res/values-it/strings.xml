@@ -1,0 +1,19 @@
+<resources>
+    <!-- BTS -->
+    <string name="bts_action_filter">Filtra</string>
+    <string name="bts_action_update">Aggiorna</string>
+    <string name="bts_action_about">Info</string>
+    <string name="bts_cluster_title">BTS in questo cluster</string>
+
+    <!-- Provider -->
+    <string name="provider_pick">Scegli gestore</string>
+    <string name="provider_all">Tutti</string>
+
+    <!-- About -->
+    <string name="about_title">Informazioni</string>
+    <string name="about_app_info">Informazioni app</string>
+    <string name="about_author">Autore</string>
+    <string name="about_version">Versione</string>
+    <string name="about_last_db_update">Ultimo aggiornamento database</string>
+    <string name="about_data_provider">Dati forniti da Arpa Veneto</string>
+</resources>

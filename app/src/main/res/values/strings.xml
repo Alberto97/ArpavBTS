@@ -1,4 +1,28 @@
 <resources>
-    <string name="app_name">Arpav BTS</string>
-    <string name="bts_cluster_title">BTS in questo cluster</string>
+    <string name="app_name" translatable="false">Arpav BTS</string>
+    <string name="about_author_fulfilling_ego" translatable="false">Alberto Pedron</string>
+
+    <!-- Untranslatable providers -->
+    <string name="provider_tim" translatable="false">TIM</string>
+    <string name="provider_vodafone" translatable="false">Vodafone</string>
+    <string name="provider_windtre" translatable="false">Wind Tre</string>
+    <string name="provider_iliad" translatable="false">Iliad</string>
+
+    <!-- BTS -->
+    <string name="bts_action_filter">Filter</string>
+    <string name="bts_action_update">Update</string>
+    <string name="bts_action_about">@string/about_title</string>
+    <string name="bts_cluster_title">BTS in this cluster</string>
+
+    <!-- Provider -->
+    <string name="provider_pick">Pick provider</string>
+    <string name="provider_all">All</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_app_info">App Info</string>
+    <string name="about_author">Author</string>
+    <string name="about_version">Version</string>
+    <string name="about_last_db_update">Last database update</string>
+    <string name="about_data_provider">Data provided by Arpa Veneto</string>
 </resources>

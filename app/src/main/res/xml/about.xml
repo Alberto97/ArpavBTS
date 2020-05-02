@@ -4,24 +4,24 @@
     <org.alberto97.arpavbts.ui.PreferenceHeader />
     <Preference
             android:key="arpav"
-            android:title="Dati forniti da Arpa Veneto">
+            android:title="@string/about_data_provider">
         <intent android:action="android.intent.action.VIEW"
                 android:data="https://www.arpa.veneto.it/" />
     </Preference>
 
-    <PreferenceCategory android:title="Informazioni app">
+    <PreferenceCategory android:title="@string/about_app_info">
 
         <Preference
                 android:key="author"
-                android:title="Autore"
-                android:summary="Alberto Pedron">
+                android:title="@string/about_author"
+                android:summary="@string/about_author_fulfilling_ego">
             <intent android:action="android.intent.action.VIEW"
                     android:data="https://github.com/Alberto97" />
         </Preference>
 
         <Preference
                 android:key="version"
-                android:title="Versione"
+                android:title="@string/about_version"
                 android:summary="placeholder">
             <intent android:action="android.intent.action.VIEW"
                     android:data="https://github.com/Alberto97/arpavbts" />
@@ -29,7 +29,7 @@
 
         <Preference
                 android:key="db_version"
-                android:title="Ultimo aggiornamento database"
+                android:title="@string/about_last_db_update"
                 android:summary="placeholder"
                 android:selectable="false"/>
 

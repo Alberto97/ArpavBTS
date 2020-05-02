@@ -24,12 +24,11 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
             R.layout.dialog_gestore, container, false)
 
         val list = arrayListOf(
-            getItem("Tutti", all),
-            getItem("TIM", tim),
-            getItem("Vodafone", vodafone),
-            getItem("Wind Tre", windTre),
-            getItem("Iliad", iliad)
-            //getItem("Altri", others)
+            getItem(getString(R.string.provider_all), all),
+            getItem(getString(R.string.provider_tim), tim),
+            getItem(getString(R.string.provider_vodafone), vodafone),
+            getItem(getString(R.string.provider_windtre), windTre),
+            getItem(getString(R.string.provider_iliad), iliad)
         )
 
         val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }

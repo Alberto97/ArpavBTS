@@ -231,7 +231,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_gestori -> {
+            R.id.action_providers -> {
                 val dialog = GestoreBottomSheetDialog()
                 dialog.setTargetFragment(this, selectGestoreRequestCode)
                 dialog.showNow(parentFragmentManager, "")
