@@ -1,8 +1,8 @@
 package org.alberto97.arpavbts.db
 
 import android.content.Context
-import android.preference.PreferenceManager
 import androidx.lifecycle.LiveData
+import androidx.preference.PreferenceManager
 import org.alberto97.arpavbts.tools.ArpavApi
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
