@@ -3,8 +3,6 @@ package org.alberto97.arpavbts.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.clustering.ClusterItem
 
 @Entity(tableName = "bts")
 class Bts(
