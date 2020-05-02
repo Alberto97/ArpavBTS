@@ -16,11 +16,9 @@ class MarkerRenderer(context: Context, map: GoogleMap, clusterManager: ClusterMa
     // TODO: Figure out how to properly inject IGestoriUtils with Koin here
     private val utils = GestoriUtils()
 
-    override fun onBeforeClusterItemRendered(item: ClusterItemData?, markerOptions: MarkerOptions?) {
-        item ?: return
-
+    override fun onBeforeClusterItemRendered(item: ClusterItemData, markerOptions: MarkerOptions) {
         val color = utils.getColor(item.data.gestore).toHue()
-        markerOptions!!.icon(BitmapDescriptorFactory.defaultMarker(color))
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color))
         super.onBeforeClusterItemRendered(item, markerOptions)
     }
 }
