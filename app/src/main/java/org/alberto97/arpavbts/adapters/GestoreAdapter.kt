@@ -1,5 +1,6 @@
 package org.alberto97.arpavbts.adapters
 
+import android.content.res.ColorStateList
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -20,9 +21,10 @@ class GestoreAdapter(val listener: (GestoreAdapterItem) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int)  = holder.bind(getItem(position))
 
     inner class ViewHolder(private val binding: ListItemGestoreBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: GestoreAdapterItem) = with(binding) {
-            binding.gestore = item
-            setClickListener { listener(item) }
+        fun bind(item: GestoreAdapterItem) {
+            binding.root.setOnClickListener { listener(item) }
+            binding.icon.imageTintList = ColorStateList.valueOf(item.color)
+            binding.label.text = item.name
         }
     }
 }

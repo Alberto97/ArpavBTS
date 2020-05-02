@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.GestoreAdapter
@@ -18,10 +17,7 @@ import org.alberto97.arpavbts.tools.*
 const val SHEET_SELECTED_PROVIDER = "Provider"
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val binding = DataBindingUtil.inflate<DialogGestoreBinding>(
-            inflater,
-            R.layout.dialog_gestore, container, false)
+        val binding = DialogGestoreBinding.inflate(inflater, container, false)
 
         val list = arrayListOf(
             getItem(getString(R.string.provider_all), null),
