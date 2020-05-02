@@ -15,7 +15,7 @@ import org.alberto97.arpavbts.databinding.DialogGestoreBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.*
 
-const val SHEET_SELECTED_GESTORE_ID = "GestoreId"
+const val SHEET_SELECTED_PROVIDER = "Provider"
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -24,11 +24,11 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
             R.layout.dialog_gestore, container, false)
 
         val list = arrayListOf(
-            getItem(getString(R.string.provider_all), all),
-            getItem(getString(R.string.provider_tim), tim),
-            getItem(getString(R.string.provider_vodafone), vodafone),
-            getItem(getString(R.string.provider_windtre), windTre),
-            getItem(getString(R.string.provider_iliad), iliad)
+            getItem(getString(R.string.provider_all), null),
+            getItem(getString(R.string.provider_tim), timName),
+            getItem(getString(R.string.provider_vodafone), vodafoneName),
+            getItem(getString(R.string.provider_windtre), windTreName),
+            getItem(getString(R.string.provider_iliad), iliadName)
         )
 
         val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }
@@ -40,12 +40,12 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
 
     private fun onGestoreClick(data: GestoreAdapterItem) {
         val intent = Intent()
-        intent.putExtra(SHEET_SELECTED_GESTORE_ID, data.id)
+        intent.putExtra(SHEET_SELECTED_PROVIDER, data.id)
         targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
         this.dismiss()
     }
 
-    private fun getItem(name: String, id: String): GestoreAdapterItem {
+    private fun getItem(name: String, id: String?): GestoreAdapterItem {
         val colorStr = carrierColor[id] ?: allColor
         val color = Color.parseColor(colorStr)
 

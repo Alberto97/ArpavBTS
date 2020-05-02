@@ -24,10 +24,9 @@ import org.alberto97.arpavbts.databinding.FragmentMapBinding
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.tools.all
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
-import org.alberto97.arpavbts.ui.SHEET_SELECTED_GESTORE_ID
+import org.alberto97.arpavbts.ui.SHEET_SELECTED_PROVIDER
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -123,7 +122,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         getMap().setOnMapClickListener(this)
 
         // Fetch data
-        onGestoreResult(all)
+        onGestoreResult(null)
     }
 
     override fun onMapClick(p0: LatLng?) {
@@ -134,12 +133,12 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == selectGestoreRequestCode && resultCode == Activity.RESULT_OK) {
-            val id = data?.getStringExtra(SHEET_SELECTED_GESTORE_ID) ?: return
+            val id = data?.getStringExtra(SHEET_SELECTED_PROVIDER)
             onGestoreResult(id)
         }
     }
 
-    private fun onGestoreResult(id: String) {
+    private fun onGestoreResult(id: String?) {
         viewModel.getBtsByCarrier(id)
     }
 
@@ -183,7 +182,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     }
 
     private fun onBtsClick(out: GestoreAdapterItem) {
-        val bts = clusterBts.find { it.data.idImpianto == out.id.toInt()}
+        val bts = clusterBts.find { it.data.idImpianto == out.id?.toInt()}
         showGestoreBottomBehavior(false)
         bts ?: return
         setBtsBottom(bts.data)

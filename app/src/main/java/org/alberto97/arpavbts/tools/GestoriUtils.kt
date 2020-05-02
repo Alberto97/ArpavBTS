@@ -9,8 +9,7 @@ interface IGestoriUtils {
 class GestoriUtils : IGestoriUtils {
 
     override fun getColor(gestore: String): Int {
-        val id = carrierIdByName[gestore]
-        val color = carrierColor[id] ?: otherColor
+        val color = carrierColor[gestore] ?: otherColor
         return Color.parseColor(color)
     }
 }

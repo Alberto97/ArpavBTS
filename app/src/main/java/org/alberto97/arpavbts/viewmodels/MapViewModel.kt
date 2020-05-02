@@ -18,7 +18,6 @@ import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.IGestoriUtils
-import org.alberto97.arpavbts.tools.carrierNameById
 
 class MapViewModel(
     val app: Application,
@@ -30,8 +29,7 @@ class MapViewModel(
 
     private val _carrierInput = MutableLiveData<String>()
     private val _btsList: LiveData<List<Bts>> = Transformations.switchMap(_carrierInput) {
-        val carrier = carrierNameById[it]
-        btsRepo.getBts(carrier)
+        btsRepo.getBts(it)
     }
 
     val btsList: LiveData<List<ClusterItemData>> = Transformations.map(_btsList) {
@@ -48,7 +46,7 @@ class MapViewModel(
         }
     }
 
-    fun getBtsByCarrier(id: String) {
+    fun getBtsByCarrier(id: String?) {
         _carrierInput.value = id
     }
 
