@@ -9,6 +9,10 @@
     <string name="provider_pick">Scegli gestore</string>
     <string name="provider_all">Tutti</string>
 
+    <!-- Notifications -->
+    <string name="bts_update_notification_channel">Aggiornamenti torri</string>
+    <string name="bts_update_notification_title">Aggiornamento torri…</string>
+
     <!-- About -->
     <string name="about_title">Informazioni</string>
     <string name="about_app_info">Informazioni app</string>

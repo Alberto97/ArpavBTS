@@ -26,6 +26,7 @@ class MapViewModel(
 
     private val notificationManager = app.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val notificationId = 1
+    private val notificationChannel = "bts_updates"
 
     private val _carrierInput = MutableLiveData<String>()
     private val _btsList: LiveData<List<Bts>> = Transformations.switchMap(_carrierInput) {
@@ -83,15 +84,17 @@ class MapViewModel(
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val channel = NotificationChannel("bts_updates", "Aggiornamenti", NotificationManager.IMPORTANCE_LOW)
+        val channelName = app.getString(R.string.bts_update_notification_channel)
+        val channel = NotificationChannel(notificationChannel, channelName, NotificationManager.IMPORTANCE_LOW)
         notificationManager.createNotificationChannel(channel)
     }
 
     fun updateDb(forceUpdate: Boolean = false) {
         createChannel()
-        val notificationBuilder = NotificationCompat.Builder(app, "bts_updates")
+        val title = app.getString(R.string.bts_update_notification_title)
+        val notificationBuilder = NotificationCompat.Builder(app, notificationChannel)
             .setSmallIcon(R.drawable.ic_bts_white)
-            .setContentTitle("Updating BTS...")
+            .setContentTitle(title)
             .setOngoing(true)
             .setProgress(100, 0, true)
 

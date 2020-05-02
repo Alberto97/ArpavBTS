@@ -18,6 +18,10 @@
     <string name="provider_pick">Pick provider</string>
     <string name="provider_all">All</string>
 
+    <!-- Notifications -->
+    <string name="bts_update_notification_channel">Towers updates</string>
+    <string name="bts_update_notification_title">Updating towers…</string>
+
     <!-- About -->
     <string name="about_title">About</string>
     <string name="about_app_info">App Info</string>
