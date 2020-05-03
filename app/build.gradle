@@ -13,6 +13,20 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def secureProps = new Properties()
+        if (file("secure.properties").exists()) {
+            file("secure.properties")?.withInputStream { secureProps.load(it) }
+        }
+
+        // To add your Maps API key to this project:
+        // 1. Create a file app/secure.properties
+        // 2. Add this line, where YOUR_API_KEY is your API key:
+        //        GOOGLE_MAPS_API_KEY=YOUR_API_KEY
+        resValue "string", "google_maps_api_key", (secureProps.getProperty("GOOGLE_MAPS_API_KEY") ?: "")
+
+        def endpoint = "\"http://alberto97.altervista.org/arpav/v1/impianti.json\""
+        buildConfigField "String", "ENDPOINT_URL", (secureProps.getProperty("ENDPOINT_URL") ?: endpoint)
     }
     buildTypes {
         release {
