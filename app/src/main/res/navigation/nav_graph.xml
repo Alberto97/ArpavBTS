@@ -15,5 +15,5 @@
     <fragment
             android:id="@+id/aboutFragment"
             android:name="org.alberto97.arpavbts.fragments.AboutFragment"
-            android:label="AboutFragment" />
+            android:label="@string/about_title" />
 </navigation>
