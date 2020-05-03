@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceFragmentCompat
 import org.alberto97.arpavbts.R
 
@@ -24,9 +25,7 @@ abstract class ToolbarPreferenceFragment : PreferenceFragmentCompat() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         // Must be called after setSupportActionBar
-        toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+        toolbar.setupWithNavController(findNavController())
     }
 
     fun getToolbar(): ActionBar? {
