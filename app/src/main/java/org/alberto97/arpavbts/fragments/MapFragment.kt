@@ -50,6 +50,8 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
     private val selectGestoreRequestCode = 1
 
+    private var restoredInstance = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +68,13 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         gestoreBottomSheetSetup()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
+        restoredInstance = mapViewBundle != null
     }
 
     private fun btsBottomSheetSetup() {
@@ -122,8 +131,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         renderer.minClusterSize = 1
         getClusterManager().renderer = renderer
 
-        // Move camera to Veneto
-        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(45.6736317,11.9941753), 7f))
+        if (!restoredInstance) {
+            // Move camera to Veneto
+            getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(45.6736317,11.9941753), 7f))
+        }
 
         // Setup various listeners
         getClusterManager().setOnClusterClickListener(this)
