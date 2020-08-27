@@ -7,6 +7,7 @@ import org.alberto97.arpavbts.modules.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 @Suppress("unused")
 class MainApplication : Application() {
@@ -14,7 +15,7 @@ class MainApplication : Application() {
         super.onCreate()
         startKoin {
             if (BuildConfig.DEBUG)
-                androidLogger()
+                androidLogger(Level.ERROR)
 
             // Android context
             androidContext(this@MainApplication)
