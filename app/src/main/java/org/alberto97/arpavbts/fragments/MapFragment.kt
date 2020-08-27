@@ -3,12 +3,12 @@ package org.alberto97.arpavbts.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,6 +16,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.BTSAdapter
 import org.alberto97.arpavbts.adapters.GestoreAdapter
@@ -175,9 +177,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         showBtsBottomBehavior(false)
         viewModel.setGestoreData(data)
 
-        Handler().postDelayed({
+        lifecycleScope.launch {
+            delay(500L)
             showGestoreBottomBehavior(true)
-        }, 500)
+        }
     }
 
     private fun onBtsClick(out: GestoreAdapterItem) {
@@ -191,9 +194,10 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         showGestoreBottomBehavior(false)
         viewModel.setBtsData(data)
 
-        Handler().postDelayed({
+        lifecycleScope.launch {
+            delay(500L)
             showBtsBottomBehavior(true)
-        }, 500)
+        }
 
         // Position
         /*bts_position.setOnClickListener {
