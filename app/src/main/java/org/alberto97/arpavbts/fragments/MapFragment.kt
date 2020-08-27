@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
@@ -26,6 +27,7 @@ import org.alberto97.arpavbts.databinding.FragmentMapBinding
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.ui.SHEET_SELECTED_PROVIDER
@@ -105,6 +107,11 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
     override fun onMapReady() {
         super.onMapReady()
+
+        if (requireContext().resources.configuration.isNightModeOn()) {
+            val mapStyle = MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.night_map)
+            getMap().setMapStyle(mapStyle)
+        }
 
         viewModel.btsList.observe(viewLifecycleOwner, {
             setMarkers(it)
