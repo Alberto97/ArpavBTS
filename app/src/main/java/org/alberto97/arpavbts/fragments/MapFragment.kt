@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -64,12 +63,12 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         binding.btsRecyclerView.adapter = BTSAdapter()
 
         // Title
-        viewModel.btsDataTitle.observe(viewLifecycleOwner, Observer {
+        viewModel.btsDataTitle.observe(viewLifecycleOwner, {
             binding.btsName.text = it
         })
 
         // Recyclerview refresh
-        viewModel.btsData.observe(viewLifecycleOwner, Observer {
+        viewModel.btsData.observe(viewLifecycleOwner, {
             val adapter = binding.btsRecyclerView.adapter as BTSAdapter
             adapter.submitList(it)
         })
@@ -80,7 +79,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
 
         // Recyclerview refresh
-        viewModel.gestoreData.observe(viewLifecycleOwner, Observer {
+        viewModel.gestoreData.observe(viewLifecycleOwner, {
             val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
             adapter.submitList(it)
         })
@@ -102,7 +101,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     override fun onMapReady() {
         super.onMapReady()
 
-        viewModel.btsList.observe(viewLifecycleOwner, Observer {
+        viewModel.btsList.observe(viewLifecycleOwner, {
             setMarkers(it)
         })
 

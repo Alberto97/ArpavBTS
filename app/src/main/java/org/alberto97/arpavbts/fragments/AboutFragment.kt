@@ -2,7 +2,6 @@ package org.alberto97.arpavbts.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.viewmodels.AboutViewModel
@@ -19,7 +18,7 @@ class AboutFragment : ToolbarPreferenceFragment() {
         version?.summary = viewModel.appVersion
 
         val dbVersion = preferenceScreen.findPreference<Preference>("db_version")
-        viewModel.dbVersion.observe(this, Observer {
+        viewModel.dbVersion.observe(this, {
             dbVersion?.summary = it
         })
     }

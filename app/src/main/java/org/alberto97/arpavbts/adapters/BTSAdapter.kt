@@ -15,7 +15,7 @@ class BTSAdapter : ListAdapter<BTSDetailsAdapterItem, BTSAdapter.ViewHolder>(BTS
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
-    inner class ViewHolder(private val binding: ListItemBtsBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ListItemBtsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: BTSDetailsAdapterItem) {
             binding.detailIcon.setImageResource(item.icon)
             binding.detailText.text = item.text
