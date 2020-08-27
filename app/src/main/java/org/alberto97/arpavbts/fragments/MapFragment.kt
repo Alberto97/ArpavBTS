@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -54,6 +55,11 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     ): View? {
         binding = FragmentMapBinding.inflate(inflater)
 
+        binding.toolbar.setupWithNavController(findNavController())
+        binding.toolbar.setOnMenuItemClickListener {
+            onMenuItemClick(it)
+        }
+
         btsBottomSheetSetup()
         gestoreBottomSheetSetup()
 
@@ -86,9 +92,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
             adapter.submitList(it)
         })
     }
-
-    override fun getToolbar() = binding.toolbar
-    override fun getMenuResource() = R.menu.main
 
     private fun setMarkers(btsList: List<ClusterItemData>) {
         with(getClusterManager()) {
@@ -231,7 +234,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_providers -> {
                 val dialog = GestoreBottomSheetDialog()
@@ -247,10 +250,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
                 findNavController().navigate(R.id.action_map_to_about)
                 true
             }
-            else ->
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 }

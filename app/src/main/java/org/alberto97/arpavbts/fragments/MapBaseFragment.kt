@@ -2,17 +2,17 @@ package org.alberto97.arpavbts.fragments
 
 import android.os.Bundle
 import android.view.View
-//import androidx.fragment.app.Fragment
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 
 const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
 
-// TODO: I should really find a way to break dependencies on ToolbarFragment
-// https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/java/com/example/mapdemo/RawMapViewDemoActivity.java
-//abstract class BaseMapFragment : Fragment(), OnMapReadyCallback {
-abstract class MapBaseFragment : ToolbarFragment(), OnMapReadyCallback {
+//
+// https://github.com/googlemaps/android-samples/blob/main/ApiDemos/java/app/src/v3/java/com/example/mapdemo/RawMapViewDemoActivity.java
+//
+abstract class MapBaseFragment : Fragment(), OnMapReadyCallback {
 
     abstract fun getMapView(): MapView
     private lateinit var mMap: GoogleMap

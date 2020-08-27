@@ -1,13 +1,14 @@
 package org.alberto97.arpavbts.fragments
 
 import android.os.Bundle
-import android.view.View
 import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.viewmodels.AboutViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AboutFragment : ToolbarPreferenceFragment() {
+@Suppress("unused")
+class AboutFragment : PreferenceFragmentCompat() {
 
     private val viewModel: AboutViewModel by viewModel()
 
@@ -21,10 +22,5 @@ class AboutFragment : ToolbarPreferenceFragment() {
         viewModel.dbVersion.observe(this, {
             dbVersion?.summary = it
         })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getToolbar()?.setDisplayHomeAsUpEnabled(true)
     }
 }
