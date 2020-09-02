@@ -101,13 +101,11 @@ class MapViewModel(
         val notification: Notification = notificationBuilder.build()
         notificationManager.notify(notificationId, notification)
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                if (forceUpdate) {
-                    btsRepo.updateBts()
-                } else {
-                    btsRepo.updateBtsIfOldOrEmpty()
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (forceUpdate) {
+                btsRepo.updateBts()
+            } else {
+                btsRepo.updateBtsIfOldOrEmpty()
             }
             withContext(Dispatchers.Main) {
                 notificationManager.cancel(notificationId)
