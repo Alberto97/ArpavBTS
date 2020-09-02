@@ -128,7 +128,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
 
         // Setup custom marker renderer for multiple marker colors
         val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager())
-        renderer.minClusterSize = 1
+        renderer.minClusterSize = 2
         getClusterManager().renderer = renderer
 
         if (!restoredInstance) {
