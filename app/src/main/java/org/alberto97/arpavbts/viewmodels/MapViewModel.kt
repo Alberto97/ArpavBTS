@@ -4,9 +4,9 @@ import android.app.Application
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ class MapViewModel(
     private val btsRepo: IBtsRepository,
     private val gestoriUtils: IGestoriUtils) : AndroidViewModel(app) {
 
-    private val notificationManager = app.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager = NotificationManagerCompat.from(app)
     private val notificationId = 1
     private val notificationChannel = "bts_updates"
 
