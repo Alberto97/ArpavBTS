@@ -4,4 +4,12 @@
     <color name="colorPrimary">@color/colorPrimaryDark</color>
     <color name="colorPrimaryDark">#1faa00</color>
     <color name="colorAccent">#007900</color>
+
+    <color name="cluster_0">#22ba00</color>
+    <color name="cluster_1">#1faa00</color>
+    <color name="cluster_2">#1c9b00</color>
+    <color name="cluster_3">#198c00</color>
+    <color name="cluster_4">#177c00</color>
+    <color name="cluster_5">#146d00</color>
+    <color name="cluster_6">#115e00</color>
 </resources>
