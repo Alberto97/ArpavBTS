@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import org.alberto97.arpavbts.ui.theme.AppTheme
 
 @Composable
 fun ListItemGestore(id: String?, text: String, tint: Color, onClick: (id: String?) -> Unit) {
@@ -49,12 +50,14 @@ fun ListItemGestore(id: String?, text: String, tint: Color, onClick: (id: String
 @Preview
 @Composable
 private fun ListItemPreview() {
-    MaterialTheme {
-        ListItemGestore(
-            id = "1",
-            text = "Prova",
-            tint = Color(0xff1faa00),
-            onClick = {}
-        )
+    AppTheme(darkTheme = false) {
+        Surface {
+            ListItemGestore(
+                id = "1",
+                text = "Prova",
+                tint = Color(0xff1faa00),
+                onClick = {}
+            )
+        }
     }
 }

@@ -10,7 +10,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.*
+import org.alberto97.arpavbts.ui.theme.AppTheme
 
 const val SHEET_SELECTED_PROVIDER = "Provider"
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
@@ -38,20 +39,22 @@ class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                MaterialTheme {
-                    Column {
-                        Text(
-                            text = stringResource(R.string.provider_pick),
-                            modifier = Modifier.padding(15.dp)
-                        )
-
-                        LazyColumnFor(list) {
-                            ListItemGestore(
-                                id = it.id,
-                                text = it.name,
-                                tint = Color(it.color),
-                                onClick = { id -> onGestoreClick(id) }
+                AppTheme {
+                    Surface {
+                        Column {
+                            Text(
+                                text = stringResource(R.string.provider_pick),
+                                modifier = Modifier.padding(15.dp)
                             )
+
+                            LazyColumnFor(list) {
+                                ListItemGestore(
+                                    id = it.id,
+                                    text = it.name,
+                                    tint = Color(it.color),
+                                    onClick = { id -> onGestoreClick(id) }
+                                )
+                            }
                         }
                     }
                 }
