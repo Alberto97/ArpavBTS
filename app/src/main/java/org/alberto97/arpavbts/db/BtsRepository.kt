@@ -1,8 +1,8 @@
 package org.alberto97.arpavbts.db
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.flow.Flow
 import org.alberto97.arpavbts.tools.ArpavApi
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
@@ -11,7 +11,7 @@ import kotlin.time.toDuration
 interface IBtsRepository {
     suspend fun saveBts(bts: List<Bts>)
     suspend fun clear()
-    fun getBts(gestore: String? = null): LiveData<List<Bts>>
+    fun getBts(gestore: String? = null): Flow<List<Bts>>
     suspend fun updateBtsIfOldOrEmpty()
     suspend fun updateBts()
     fun getLastDbUpdate(): Long
@@ -33,7 +33,7 @@ class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi, pri
 
     override suspend fun clear() = dao.deleteAll()
 
-    override fun getBts(gestore: String?): LiveData<List<Bts>> {
+    override fun getBts(gestore: String?): Flow<List<Bts>> {
         return if (gestore != null) {
             dao.getBtsByGestore(gestore)
         } else {

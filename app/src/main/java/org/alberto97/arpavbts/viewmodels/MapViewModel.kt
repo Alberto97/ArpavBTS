@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.alberto97.arpavbts.R
@@ -29,12 +30,10 @@ class MapViewModel(
     private val notificationChannel = "bts_updates"
 
     private val _carrierInput = MutableLiveData<String>()
-    private val _btsList: LiveData<List<Bts>> = Transformations.switchMap(_carrierInput) {
-        btsRepo.getBts(it)
-    }
-
-    val btsList: LiveData<List<ClusterItemData>> = Transformations.map(_btsList) {
-        list -> list.map { ClusterItemData(it) }
+    val btsList: LiveData<List<ClusterItemData>> = Transformations.switchMap(_carrierInput) { carrier ->
+        btsRepo.getBts(carrier).map { value ->
+            value.map { item -> ClusterItemData(item) }
+        }.asLiveData()
     }
 
     val btsDataTitle = MutableLiveData<String>()

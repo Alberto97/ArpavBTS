@@ -1,14 +1,17 @@
 package org.alberto97.arpavbts.db
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BtsDao {
     @Query("SELECT * FROM bts WHERE gestore = :gestore")
-    fun getBtsByGestore(gestore: String): LiveData<List<Bts>>
+    fun getBtsByGestore(gestore: String): Flow<List<Bts>>
 
     @Query("SELECT * FROM bts")
-    fun getBts(): LiveData<List<Bts>>
+    fun getBts(): Flow<List<Bts>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(bts: List<Bts>)
