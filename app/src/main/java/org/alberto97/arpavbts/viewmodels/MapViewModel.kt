@@ -41,9 +41,7 @@ class MapViewModel(
     val gestoreData = MutableLiveData<List<GestoreAdapterItem>>()
 
     init {
-        viewModelScope.launch {
-            updateDb()
-        }
+        updateDb()
     }
 
     fun getBtsByCarrier(id: String?) {
