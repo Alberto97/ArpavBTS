@@ -1,16 +1,17 @@
 package org.alberto97.arpavbts.fragments
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dagger.hilt.android.AndroidEntryPoint
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.viewmodels.AboutViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@Suppress("unused")
+@AndroidEntryPoint
 class AboutFragment : PreferenceFragmentCompat() {
 
-    private val viewModel: AboutViewModel by viewModel()
+    private val viewModel: AboutViewModel by viewModels()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.about, rootKey)

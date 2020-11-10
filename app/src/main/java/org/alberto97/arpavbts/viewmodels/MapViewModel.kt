@@ -1,13 +1,15 @@
 package org.alberto97.arpavbts.viewmodels
 
-import android.app.Application
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -20,12 +22,12 @@ import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.IGestoriUtils
 
-class MapViewModel(
-    val app: Application,
+class MapViewModel @ViewModelInject constructor(
+    @ApplicationContext private val context: Context,
     private val btsRepo: IBtsRepository,
-    private val gestoriUtils: IGestoriUtils) : AndroidViewModel(app) {
+    private val gestoriUtils: IGestoriUtils) : ViewModel() {
 
-    private val notificationManager = NotificationManagerCompat.from(app)
+    private val notificationManager = NotificationManagerCompat.from(context)
     private val notificationId = 1
     private val notificationChannel = "bts_updates"
 
@@ -81,15 +83,15 @@ class MapViewModel(
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val channelName = app.getString(R.string.bts_update_notification_channel)
+        val channelName = context.getString(R.string.bts_update_notification_channel)
         val channel = NotificationChannel(notificationChannel, channelName, NotificationManager.IMPORTANCE_LOW)
         notificationManager.createNotificationChannel(channel)
     }
 
     fun updateDb(forceUpdate: Boolean = false) {
         createChannel()
-        val title = app.getString(R.string.bts_update_notification_title)
-        val notificationBuilder = NotificationCompat.Builder(app, notificationChannel)
+        val title = context.getString(R.string.bts_update_notification_title)
+        val notificationBuilder = NotificationCompat.Builder(context, notificationChannel)
             .setSmallIcon(R.drawable.ic_bts_white)
             .setContentTitle(title)
             .setOngoing(true)

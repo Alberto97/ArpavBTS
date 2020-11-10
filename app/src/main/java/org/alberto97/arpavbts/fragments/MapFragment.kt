@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.alberto97.arpavbts.R
@@ -28,19 +30,24 @@ import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
+import org.alberto97.arpavbts.tools.IGestoriUtils
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.ui.SHEET_SELECTED_PROVIDER
 import org.alberto97.arpavbts.viewmodels.MapViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
     GoogleMap.OnMapClickListener,
     ClusterManager.OnClusterClickListener<ClusterItemData>,
     ClusterManager.OnClusterItemClickListener<ClusterItemData> {
 
-    private val viewModel: MapViewModel by viewModel()
+    private val viewModel: MapViewModel by viewModels()
     private lateinit var binding: FragmentMapBinding
+
+    @Inject
+    lateinit var gestoriUtils: IGestoriUtils
 
     // Bottom Behavior
     private lateinit var btsBehavior: BottomSheetBehavior<LinearLayout>
@@ -127,7 +134,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         })
 
         // Setup custom marker renderer for multiple marker colors
-        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager())
+        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager(), gestoriUtils)
         renderer.minClusterSize = 2
         getClusterManager().renderer = renderer
 

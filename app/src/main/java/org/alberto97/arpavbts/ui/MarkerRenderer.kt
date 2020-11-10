@@ -11,17 +11,14 @@ import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.tools.Extensions.toHue
 import org.alberto97.arpavbts.tools.IGestoriUtils
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 class MarkerRenderer(
     private val context: Context,
     map: GoogleMap,
-    clusterManager: ClusterManager<ClusterItemData>
+    clusterManager: ClusterManager<ClusterItemData>,
+    private val utils: IGestoriUtils
 ) :
-    DefaultClusterRenderer<ClusterItemData>(context, map, clusterManager), KoinComponent {
-
-    private val utils: IGestoriUtils by inject()
+    DefaultClusterRenderer<ClusterItemData>(context, map, clusterManager) {
 
     private val buckets = arrayOf(10, 20, 50, 100, 200, 500, 1000)
     private val colors = arrayOf(

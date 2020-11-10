@@ -2,8 +2,11 @@ package org.alberto97.arpavbts.db
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import org.alberto97.arpavbts.tools.ArpavApi
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
@@ -20,7 +23,13 @@ interface IBtsRepository {
 object SharedPreferenceConstants {
     const val LAST_DB_UPDATE = "last_db_update"
 }
-class BtsRepository(private val dao: BtsDao, private val arpavApi: ArpavApi, private val context: Context) : IBtsRepository {
+
+@Singleton
+class BtsRepository @Inject constructor(
+    private val dao: BtsDao,
+    private val arpavApi: ArpavApi,
+    @ApplicationContext private val context: Context
+) : IBtsRepository {
 
     override suspend fun saveBts(bts: List<Bts>) {
         dao.insert(bts)
