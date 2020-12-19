@@ -14,6 +14,7 @@ abstract class MapBaseActivity : AppCompatActivity(), OnMapReadyCallback {
         onMapReady()
     }
 
+    @Suppress("unused")
     fun getMap(): GoogleMap {
         return mMap
     }
