@@ -16,7 +16,7 @@ import org.alberto97.arpavbts.tools.*
 
 const val SHEET_SELECTED_PROVIDER = "Provider"
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DialogGestoreBinding.inflate(inflater, container, false)
 
         val list = arrayListOf(

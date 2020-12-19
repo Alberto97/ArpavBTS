@@ -63,7 +63,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMapBinding.inflate(inflater)
 
         binding.toolbar.setupWithNavController(findNavController())

@@ -16,7 +16,7 @@ class AboutFragmentWrapper : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentAboutWrapperBinding.inflate(inflater)
         binding.toolbar.setupWithNavController(findNavController())
 
