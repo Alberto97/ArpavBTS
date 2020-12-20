@@ -11,5 +11,5 @@ class GestoreConfigModel(
     val label: String,
     val rawName: String,
     @AndroidColor val color: Int,
-    val preferred: Boolean
+    val preferred: Boolean = false
 )
