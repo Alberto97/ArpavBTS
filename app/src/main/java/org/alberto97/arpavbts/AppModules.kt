@@ -17,7 +17,7 @@ import org.alberto97.arpavbts.tools.ArpavApi
 import org.alberto97.arpavbts.tools.GestoriUtils
 import org.alberto97.arpavbts.tools.IGestoriUtils
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -54,7 +54,7 @@ object NetworkModule {
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
             .baseUrl("http://alberto97.altervista.org/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
     @Provides
