@@ -23,6 +23,21 @@
       "rawName": "ILIAD ITALIA S.p.A.",
       "color": "#D32F2F",
       "preferred": true
+    },
+    {
+      "label": "Rai Way",
+      "rawName": "RAIWAY S.p.A.",
+      "color": "#004995"
+    },
+    {
+      "label": "Linkem",
+      "rawName": "LINKEM",
+      "color": "#E2E8F0"
+    },
+    {
+      "label": "Fastweb Air",
+      "rawName": "FastwebAir",
+      "color": "#FFC726"
     }
   ]
 }
