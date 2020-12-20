@@ -65,7 +65,7 @@ class MapViewModel @ViewModelInject constructor(
             )
         )
 
-        // Remove missing infos
+        // Remove missing info
         val list = tempList.filter { !it.text.isNullOrEmpty() && it.text != "NO DATA" }
         btsData.value = list
     }
