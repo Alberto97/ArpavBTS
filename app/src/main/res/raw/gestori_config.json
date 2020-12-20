@@ -1,0 +1,28 @@
+{
+  "gestori": [
+    {
+      "label": "TIM",
+      "rawName": "TELECOM",
+      "color": "#29B6F6",
+      "preferred": true
+    },
+    {
+      "label": "Vodafone",
+      "rawName": "VODAFONE",
+      "color": "#FF3434",
+      "preferred": true
+    },
+    {
+      "label": "Wind Tre",
+      "rawName": "Wind Tre SpA",
+      "color": "#FFA000",
+      "preferred": true
+    },
+    {
+      "label": "Iliad",
+      "rawName": "ILIAD ITALIA S.p.A.",
+      "color": "#D32F2F",
+      "preferred": true
+    }
+  ]
+}

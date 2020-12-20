@@ -2,12 +2,6 @@
     <string name="app_name" translatable="false">Arpav BTS</string>
     <string name="about_author_fulfilling_ego" translatable="false">Alberto Pedron</string>
 
-    <!-- Untranslatable providers -->
-    <string name="provider_tim" translatable="false">TIM</string>
-    <string name="provider_vodafone" translatable="false">Vodafone</string>
-    <string name="provider_windtre" translatable="false">Wind Tre</string>
-    <string name="provider_iliad" translatable="false">Iliad</string>
-
     <!-- BTS -->
     <string name="bts_action_filter">Filter</string>
     <string name="bts_action_update">Update</string>

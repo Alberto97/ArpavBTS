@@ -1,9 +1,11 @@
 package org.alberto97.arpavbts.tools
 
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RawRes
 import androidx.core.graphics.ColorUtils
 
 object Extensions {
@@ -25,4 +27,7 @@ object Extensions {
             currentNightMode == Configuration.UI_MODE_NIGHT_YES
         }
     }
+
+    fun Resources.readRawTextFile(@RawRes id: Int): String =
+        openRawResource(id).bufferedReader().use { it.readText() }
 }

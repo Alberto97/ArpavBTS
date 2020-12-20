@@ -11,6 +11,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.alberto97.arpavbts.db.AppDatabase
 import org.alberto97.arpavbts.db.BtsRepository
 import org.alberto97.arpavbts.db.IBtsRepository
+import org.alberto97.arpavbts.repositories.GestoreRepository
+import org.alberto97.arpavbts.repositories.IGestoreRepository
 import org.alberto97.arpavbts.tools.ArpavApi
 import org.alberto97.arpavbts.tools.GestoriUtils
 import org.alberto97.arpavbts.tools.IGestoriUtils
@@ -23,6 +25,9 @@ import javax.inject.Singleton
 abstract class AppModule {
     @Binds
     abstract fun provideGestoriUtils(utils: GestoriUtils): IGestoriUtils
+
+    @Binds
+    abstract fun provideGestoreRepository(repository: GestoreRepository): IGestoreRepository
 
     @Binds
     abstract fun provideBtsRepository(repository: BtsRepository): IBtsRepository
