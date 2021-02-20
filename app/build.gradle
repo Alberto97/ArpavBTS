@@ -52,9 +52,6 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.1.1"
 
     // Hilt
-    def androidx_hilt_version = "1.0.0-alpha02"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidx_hilt_version"
-    kapt "androidx.hilt:hilt-compiler:$androidx_hilt_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 

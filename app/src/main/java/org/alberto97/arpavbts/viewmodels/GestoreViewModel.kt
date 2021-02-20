@@ -2,15 +2,17 @@ package org.alberto97.arpavbts.viewmodels
 
 import android.content.Context
 import android.graphics.Color
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.models.GestoreConfigModel
 import org.alberto97.arpavbts.repositories.IGestoreRepository
+import javax.inject.Inject
 
-class GestoreViewModel @ViewModelInject constructor(
+@HiltViewModel
+class GestoreViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: IGestoreRepository
 ): ViewModel() {

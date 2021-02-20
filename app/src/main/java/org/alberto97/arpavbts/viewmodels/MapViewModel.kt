@@ -7,8 +7,8 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
@@ -21,8 +21,10 @@ import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.IGestoriUtils
+import javax.inject.Inject
 
-class MapViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MapViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val btsRepo: IBtsRepository,
     private val gestoriUtils: IGestoriUtils) : ViewModel() {
