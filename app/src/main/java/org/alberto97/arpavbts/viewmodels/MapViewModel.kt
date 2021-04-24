@@ -33,7 +33,7 @@ class MapViewModel @Inject constructor(
     private val notificationId = 1
     private val notificationChannel = "bts_updates"
 
-    private val _carrierInput = MutableLiveData<String>()
+    private val _carrierInput = MutableLiveData<String?>()
     val btsList: LiveData<List<ClusterItemData>> = Transformations.switchMap(_carrierInput) { carrier ->
         btsRepo.getBts(carrier).map { value ->
             value.map { item -> ClusterItemData(item) }
