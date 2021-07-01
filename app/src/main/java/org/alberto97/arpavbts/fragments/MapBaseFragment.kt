@@ -11,7 +11,7 @@ import com.google.maps.android.ktx.awaitMap
 const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
 
 //
-// https://github.com/googlemaps/android-samples/blob/main/ApiDemos/java/app/src/v3/java/com/example/mapdemo/RawMapViewDemoActivity.java
+// https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/gms/java/com/example/kotlindemos/RawMapViewDemoActivity.kt
 //
 abstract class MapBaseFragment : Fragment() {
 
@@ -26,6 +26,9 @@ abstract class MapBaseFragment : Fragment() {
     }
 
     private fun initializeMap(savedInstanceState: Bundle?) {
+        // *** IMPORTANT ***
+        // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
+        // objects or sub-Bundles.
         val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
         getMapView().onCreate(mapViewBundle)
 
@@ -41,10 +44,8 @@ abstract class MapBaseFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
-        if (mapViewBundle == null) {
-            mapViewBundle = Bundle()
-            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
+        val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
         }
         getMapView().onSaveInstanceState(mapViewBundle)
     }
