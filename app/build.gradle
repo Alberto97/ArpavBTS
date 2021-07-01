@@ -76,7 +76,7 @@ dependencies {
     implementation 'com.google.maps.android:maps-ktx:3.1.0'
 
     // Moshi
-    def moshi_version = "1.11.0"
+    def moshi_version = "1.12.0"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
