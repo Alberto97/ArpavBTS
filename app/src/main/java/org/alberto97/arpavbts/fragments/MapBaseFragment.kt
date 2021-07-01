@@ -3,16 +3,17 @@ package org.alberto97.arpavbts.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.coroutineScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.maps.android.ktx.awaitMap
 
 const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
 
 //
 // https://github.com/googlemaps/android-samples/blob/main/ApiDemos/java/app/src/v3/java/com/example/mapdemo/RawMapViewDemoActivity.java
 //
-abstract class MapBaseFragment : Fragment(), OnMapReadyCallback {
+abstract class MapBaseFragment : Fragment() {
 
     abstract fun getMapView(): MapView
     private lateinit var mMap: GoogleMap
@@ -27,20 +28,16 @@ abstract class MapBaseFragment : Fragment(), OnMapReadyCallback {
     private fun initializeMap(savedInstanceState: Bundle?) {
         val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
         getMapView().onCreate(mapViewBundle)
-        getMapView().getMapAsync(this)
-    }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap ?: return
-        mMap = googleMap
-
-        onMapReady()
+        lifecycle.coroutineScope.launchWhenCreated {
+            mMap = getMapView().awaitMap()
+            onMapReady()
+        }
     }
 
     fun getMap(): GoogleMap {
         return mMap
     }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
