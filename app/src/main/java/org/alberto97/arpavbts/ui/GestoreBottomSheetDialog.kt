@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.work.ExperimentalExpeditedWork
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.alberto97.arpavbts.adapters.GestoreAdapter
@@ -13,6 +14,7 @@ import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 
 @AndroidEntryPoint
+@ExperimentalExpeditedWork
 class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
 
     private val viewModel: MapViewModel by activityViewModels()

@@ -1,20 +1,12 @@
 package org.alberto97.arpavbts.viewmodels
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.*
+import androidx.work.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.db.IBtsRepository
@@ -24,19 +16,18 @@ import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.models.GestoreConfigModel
 import org.alberto97.arpavbts.repositories.IGestoreRepository
 import org.alberto97.arpavbts.tools.IGestoriUtils
+import org.alberto97.arpavbts.workers.DownloadWorker
+import org.alberto97.arpavbts.workers.DownloadWorkerConstants
 import javax.inject.Inject
 
 @HiltViewModel
+@ExperimentalExpeditedWork
 class MapViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val btsRepo: IBtsRepository,
     private val gestoriUtils: IGestoriUtils,
     private val gestoreRepo: IGestoreRepository
 ) : ViewModel() {
-
-    private val notificationManager = NotificationManagerCompat.from(context)
-    private val notificationId = 1
-    private val notificationChannel = "bts_updates"
 
     private val _carrierInput = MutableLiveData<String?>()
     val btsList: LiveData<List<ClusterItemData>> = Transformations.switchMap(_carrierInput) { carrier ->
@@ -105,34 +96,14 @@ class MapViewModel @Inject constructor(
         return GestoreAdapterItem(data.color, data.label, data.rawName)
     }
 
-    private fun createChannel() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val channelName = context.getString(R.string.bts_update_notification_channel)
-        val channel = NotificationChannel(notificationChannel, channelName, NotificationManager.IMPORTANCE_LOW)
-        notificationManager.createNotificationChannel(channel)
-    }
-
     fun updateDb(forceUpdate: Boolean = false) {
-        createChannel()
-        val title = context.getString(R.string.bts_update_notification_title)
-        val notificationBuilder = NotificationCompat.Builder(context, notificationChannel)
-            .setSmallIcon(R.drawable.ic_bts_white)
-            .setContentTitle(title)
-            .setOngoing(true)
-            .setProgress(100, 0, true)
-
-        val notification: Notification = notificationBuilder.build()
-        notificationManager.notify(notificationId, notification)
-
-        viewModelScope.launch(Dispatchers.IO) {
-            if (forceUpdate) {
-                btsRepo.updateBts()
-            } else {
-                btsRepo.updateBtsIfOldOrEmpty()
-            }
-            withContext(Dispatchers.Main) {
-                notificationManager.cancel(notificationId)
-            }
+        val data = Data.Builder().apply {
+            putBoolean(DownloadWorkerConstants.FORCE_UPDATE, forceUpdate)
         }
+        val downloadWork = OneTimeWorkRequestBuilder<DownloadWorker>().apply {
+            setInputData(data.build())
+            setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+        }
+        WorkManager.getInstance(context).enqueue(downloadWork.build())
     }
 }

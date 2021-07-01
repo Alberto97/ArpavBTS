@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExperimentalExpeditedWork
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -33,6 +34,7 @@ import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalExpeditedWork
 class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
     private val viewModel: MapViewModel by activityViewModels()
