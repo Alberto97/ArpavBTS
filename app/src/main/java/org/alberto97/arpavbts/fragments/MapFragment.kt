@@ -147,7 +147,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         getClusterManager().setOnClusterClickListener(this)
         getClusterManager().setOnClusterItemClickListener(this)
         getMap().setOnCameraIdleListener(getClusterManager())
-        getMap().setOnMarkerClickListener(getClusterManager())
         getMap().setOnMapClickListener(this)
 
         // Fetch data
