@@ -62,7 +62,7 @@ class BtsRepository @Inject constructor(
             // Don't update until at least one day has passed since the last data fetch
             val lastUpdateMillis = getLastDbUpdate()
             val duration = (System.currentTimeMillis() - lastUpdateMillis).toDuration(DurationUnit.MILLISECONDS)
-            if (duration.inDays < 1) return
+            if (duration.inWholeDays < 1) return
         }
         updateBts()
     }
