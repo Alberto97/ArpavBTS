@@ -18,7 +18,7 @@ abstract class MapBaseFragment : Fragment() {
     abstract fun getMapView(): MapView
     private lateinit var mMap: GoogleMap
 
-    abstract fun onMapReady()
+    abstract fun onMapReady(mapViewBundle: Bundle?)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +34,7 @@ abstract class MapBaseFragment : Fragment() {
 
         lifecycle.coroutineScope.launchWhenCreated {
             mMap = getMapView().awaitMap()
-            onMapReady()
+            onMapReady(mapViewBundle)
         }
     }
 
