@@ -1,14 +1,12 @@
 package org.alberto97.arpavbts.fragments
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -31,14 +29,13 @@ import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
 import org.alberto97.arpavbts.tools.IGestoriUtils
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
-import org.alberto97.arpavbts.ui.SHEET_SELECTED_PROVIDER
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
-    private val viewModel: MapViewModel by viewModels()
+    private val viewModel: MapViewModel by activityViewModels()
     private lateinit var binding: FragmentMapBinding
 
     @Inject
@@ -49,8 +46,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     private lateinit var gestoreBehavior: BottomSheetBehavior<LinearLayout>
 
     private val clusterBts = arrayListOf<ClusterItemData>()
-
-    private val selectGestoreRequestCode = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -136,24 +131,12 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         getMap().setOnMapClickListener { onMapClick() }
 
         // Fetch data
-        onGestoreResult(null)
+        viewModel.getBtsByCarrier(null)
     }
 
     private fun onMapClick() {
         showBtsBottomBehavior(false)
         showGestoreBottomBehavior(false)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == selectGestoreRequestCode && resultCode == Activity.RESULT_OK) {
-            val id = data?.getStringExtra(SHEET_SELECTED_PROVIDER)
-            onGestoreResult(id)
-        }
-    }
-
-    private fun onGestoreResult(id: String?) {
-        viewModel.getBtsByCarrier(id)
     }
 
     private fun onClusterClick(cluster: Cluster<ClusterItemData>?): Boolean {
@@ -248,7 +231,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         return when (item.itemId) {
             R.id.action_providers -> {
                 val dialog = GestoreBottomSheetDialog()
-                dialog.setTargetFragment(this, selectGestoreRequestCode)
                 dialog.showNow(parentFragmentManager, "")
                 true
             }

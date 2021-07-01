@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -20,6 +21,8 @@ import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.alberto97.arpavbts.models.GestoreConfigModel
+import org.alberto97.arpavbts.repositories.IGestoreRepository
 import org.alberto97.arpavbts.tools.IGestoriUtils
 import javax.inject.Inject
 
@@ -27,7 +30,9 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val btsRepo: IBtsRepository,
-    private val gestoriUtils: IGestoriUtils) : ViewModel() {
+    private val gestoriUtils: IGestoriUtils,
+    private val gestoreRepo: IGestoreRepository
+) : ViewModel() {
 
     private val notificationManager = NotificationManagerCompat.from(context)
     private val notificationId = 1
@@ -81,6 +86,23 @@ class MapViewModel @Inject constructor(
             )
         }
         gestoreData.value = list
+    }
+
+    fun getPreferredCarrier(): List<GestoreAdapterItem> {
+        val all = GestoreAdapterItem(
+            Color.parseColor("#EEEEEE"),
+            context.getString(R.string.provider_all),
+            null
+        )
+
+        val list = gestoreRepo.getPreferred().map { mapCarrier(it) }.toMutableList()
+        list.add(0, all)
+
+        return list
+    }
+
+    private fun mapCarrier(data: GestoreConfigModel): GestoreAdapterItem {
+        return GestoreAdapterItem(data.color, data.label, data.rawName)
     }
 
     private fun createChannel() {
