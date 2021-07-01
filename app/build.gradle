@@ -54,6 +54,7 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
 
     // Lifecycle
     def lifecycle_version = "2.3.1"
@@ -84,4 +85,9 @@ dependencies {
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // Work
+    def work_version = "2.7.0-alpha04"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation 'androidx.hilt:hilt-work:1.0.0'
 }
