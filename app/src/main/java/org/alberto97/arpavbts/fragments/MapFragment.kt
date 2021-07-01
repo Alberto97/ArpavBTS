@@ -13,12 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
-import com.google.maps.android.clustering.ClusterManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,10 +36,7 @@ import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
-    GoogleMap.OnMapClickListener,
-    ClusterManager.OnClusterClickListener<ClusterItemData>,
-    ClusterManager.OnClusterItemClickListener<ClusterItemData> {
+class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
     private val viewModel: MapViewModel by viewModels()
     private lateinit var binding: FragmentMapBinding
@@ -144,16 +139,16 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         }
 
         // Setup various listeners
-        getClusterManager().setOnClusterClickListener(this)
-        getClusterManager().setOnClusterItemClickListener(this)
+        getClusterManager().setOnClusterClickListener { cluster -> onClusterClick(cluster) }
+        getClusterManager().setOnClusterItemClickListener { item -> onClusterItemClick(item) }
         getMap().setOnCameraIdleListener(getClusterManager())
-        getMap().setOnMapClickListener(this)
+        getMap().setOnMapClickListener { onMapClick() }
 
         // Fetch data
         onGestoreResult(null)
     }
 
-    override fun onMapClick(p0: LatLng?) {
+    private fun onMapClick() {
         showBtsBottomBehavior(false)
         showGestoreBottomBehavior(false)
     }
@@ -170,7 +165,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         viewModel.getBtsByCarrier(id)
     }
 
-    override fun onClusterClick(cluster: Cluster<ClusterItemData>?): Boolean {
+    private fun onClusterClick(cluster: Cluster<ClusterItemData>?): Boolean {
         cluster ?: return false
 
         if (cluster.size > 50) {
@@ -185,7 +180,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>(),
         return true
     }
 
-    override fun onClusterItemClick(item: ClusterItemData?): Boolean {
+    private fun onClusterItemClick(item: ClusterItemData?): Boolean {
         item ?: return false
         getMap().animateCamera(CameraUpdateFactory.newLatLng(item.position))
 
