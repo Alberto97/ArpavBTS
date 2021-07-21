@@ -9,7 +9,7 @@
                  android:supportsRtl="true"
                  android:usesCleartextTraffic="true"
                  android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,7 @@
         <provider
                 android:name="androidx.startup.InitializationProvider"
                 android:authorities="${applicationId}.androidx-startup"
-                tools:node="remove">
-        </provider>
+                tools:node="remove" />
 
         <!--
         To add your Maps API key to this project:
