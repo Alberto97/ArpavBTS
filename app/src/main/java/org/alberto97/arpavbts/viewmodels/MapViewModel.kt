@@ -1,11 +1,10 @@
 package org.alberto97.arpavbts.viewmodels
 
-import android.content.Context
+import android.app.Application
 import android.graphics.Color
 import androidx.lifecycle.*
 import androidx.work.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.db.Bts
@@ -23,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 @ExperimentalExpeditedWork
 class MapViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val app: Application,
     private val btsRepo: IBtsRepository,
     private val gestoriUtils: IGestoriUtils,
     private val gestoreRepo: IGestoreRepository
@@ -82,7 +81,7 @@ class MapViewModel @Inject constructor(
     fun getPreferredCarrier(): List<GestoreAdapterItem> {
         val all = GestoreAdapterItem(
             Color.parseColor("#EEEEEE"),
-            context.getString(R.string.provider_all),
+            app.getString(R.string.provider_all),
             null
         )
 
@@ -104,6 +103,6 @@ class MapViewModel @Inject constructor(
             setInputData(data.build())
             setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         }
-        WorkManager.getInstance(context).enqueue(downloadWork.build())
+        WorkManager.getInstance(app).enqueue(downloadWork.build())
     }
 }
