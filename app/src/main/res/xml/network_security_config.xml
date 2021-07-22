@@ -2,7 +2,5 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">geomap.arpa.veneto.it</domain>
-        <!-- TODO: Remove once Altervista actually enables https -->
-        <domain includeSubdomains="true">alberto97.altervista.org</domain>
     </domain-config>
 </network-security-config>
