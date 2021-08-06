@@ -29,9 +29,9 @@ class MapViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _carrierInput = MutableLiveData<String?>()
-    val btsList: LiveData<List<ClusterItemData>> = Transformations.switchMap(_carrierInput) { carrier ->
-        btsRepo.getBts(carrier).map { value ->
-            value.map { item -> ClusterItemData(item) }
+    val btsList: LiveData<List<ClusterItemData>> = _carrierInput.switchMap { carrier ->
+        btsRepo.getBts(carrier).map { list ->
+            list.map { item -> ClusterItemData(item) }
         }.asLiveData()
     }
 
