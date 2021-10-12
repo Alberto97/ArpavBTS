@@ -54,11 +54,7 @@ class MapViewModel @Inject constructor(
             BTSDetailsAdapterItem(R.drawable.ic_person_black_24dp, data.gestore),
             BTSDetailsAdapterItem(R.drawable.ic_terrain_black_24dp, "${data.quotaSlm} m"),
             BTSDetailsAdapterItem(R.drawable.ic_place_black_24dp, data.indirizzo),
-            BTSDetailsAdapterItem(R.drawable.ic_find_in_page_black_24dp, data.postazione),
-            BTSDetailsAdapterItem(
-                R.drawable.ic_settings_input_antenna_black_24dp,
-                data.pontiRadio
-            )
+            BTSDetailsAdapterItem(R.drawable.ic_find_in_page_black_24dp, data.postazione)
         )
 
         // Remove missing info

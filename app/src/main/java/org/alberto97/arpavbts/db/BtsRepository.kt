@@ -82,7 +82,7 @@ class BtsRepository @Inject constructor(
             with(props) {
                 Bts(
                     idImpianto, codice, nome, gestore, address, comune, provincia,
-                    latitudine, longitudine, quotaSlm, postazione, pontiRadio
+                    latitudine, longitudine, quotaSlm, postazione
                 )
             }
         }

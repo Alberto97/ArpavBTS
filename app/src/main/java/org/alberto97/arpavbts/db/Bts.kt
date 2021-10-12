@@ -16,8 +16,7 @@ class Bts(
     var latitudine: Float,
     var longitudine: Float,
     val quotaSlm: Float,
-    val postazione: String,
-    val pontiRadio: String
+    val postazione: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

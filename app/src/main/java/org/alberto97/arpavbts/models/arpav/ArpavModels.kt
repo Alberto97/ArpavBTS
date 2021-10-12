@@ -37,7 +37,5 @@ class FeatureProperties(
     val provincia: String,
     @Json(name = "quota_slm")
     val quotaSlm: Float,
-    val postazione: String,
-    @Json(name = "ponti_radio")
-    val pontiRadio: String
+    val postazione: String
 )
