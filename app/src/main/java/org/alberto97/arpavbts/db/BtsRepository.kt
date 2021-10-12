@@ -55,7 +55,7 @@ class BtsRepository @Inject constructor(
         return prefs.getLong(SharedPreferenceConstants.LAST_DB_UPDATE, 0)
     }
 
-    @ExperimentalTime
+    @OptIn(ExperimentalTime::class)
     override suspend fun updateBtsIfOldOrEmpty() {
         val isEmpty = dao.isEmpty()
         if (!isEmpty) {

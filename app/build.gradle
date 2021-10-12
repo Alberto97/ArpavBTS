@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -95,4 +97,10 @@ dependencies {
     def work_version = "2.7.0-rc01"
     implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation 'androidx.hilt:hilt-work:1.0.0'
+}
+
+tasks.withType(KotlinCompile).configureEach { task ->
+    task.kotlinOptions {
+        freeCompilerArgs += ['-Xopt-in=kotlin.RequiresOptIn']
+    }
 }
