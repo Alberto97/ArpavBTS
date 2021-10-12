@@ -20,7 +20,6 @@ import org.alberto97.arpavbts.workers.DownloadWorkerConstants
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalExpeditedWork
 class MapViewModel @Inject constructor(
     private val app: Application,
     private val btsRepo: IBtsRepository,
