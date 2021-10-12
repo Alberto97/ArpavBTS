@@ -1,0 +1,78 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="600dp"
+            android:height="600dp"
+            android:viewportWidth="600"
+            android:viewportHeight="600">
+            <path
+                android:name="background"
+                android:pathData="M 0 0 L 600 0 L 600 600 L 0 600 Z"
+                android:fillColor="#1faa00"/>
+            <group
+                android:name="group"
+                android:pivotX="300"
+                android:pivotY="300"
+                android:scaleX="0.5"
+                android:scaleY="0.5">
+                <path
+                    android:name="wave_3"
+                    android:pathData="M 215.675 443.045 C 208.068 436.205 196.365 433.549 188.416 426.332 C 141.889 394.451 107.879 343.277 101.601 286.717 C 93.42 225.957 113.486 161.257 158.535 118.799 C 189.724 86.335 232.173 65.669 276.931 60.909 C 302.2 60.178 327.973 58.931 352.491 66.634 C 415.252 83.447 468.16 133.02 489.365 194.396 C 512.369 261.239 498.077 340.352 449.607 392.514 C 431.904 413.253 408.926 429.199 384.852 441.772 C 324.173 473.535 286.132 473.475 215.675 443.046 Z"
+                    android:fillColor="#EEEEEE"
+                    android:fillAlpha="0"/>
+                <path
+                    android:name="wave_2"
+                    android:pathData="M 229.315 392.162 C 193.218 372.291 164.268 337.956 154.623 297.451 C 150.334 281.654 149.446 265.01 150.41 248.756 C 152.367 211.236 170.323 175.062 198.34 150.143 C 226.416 122.856 266.249 108.517 305.249 110.5 C 352.843 110.883 398.395 137.655 424.791 176.827 C 440.664 199.336 448.648 226.396 450.06 253.691 C 450.683 281.856 444.792 310.5 429.863 334.741 C 416.34 358.166 396.286 377.278 373.023 390.859 C 336.643 403.998 273.95 409.554 229.314 392.161 Z"
+                    android:fillColor="#E0E0E0"
+                    android:fillAlpha="0"/>
+                <path
+                    android:name="wave_1"
+                    android:pathData="M 245.042 342.841 C 188.093 309.509 184.409 216.231 240.043 179.669 C 286.372 144.02 362.009 159.278 388.146 212.509 C 417.364 263.681 389.762 337.755 332.192 353.736 C 304.103 358.552 269.762 358.316 245.042 342.84 Z"
+                    android:fillColor="#BDBDBD"
+                    android:fillAlpha="0"/>
+                <path
+                    android:name="tower"
+                    android:pathData="M 182.019 537.503 L 268.019 304.84 L 268.019 303.307 L 264.235 299.008 C 262.154 296.643 259.243 292.491 257.768 289.78 L 255.085 284.851 L 253.552 278.966 L 252.019 273.08 L 252.019 267 L 252.019 260.92 L 253.552 255.035 L 255.085 249.15 L 257.802 244.115 L 260.519 239.08 L 266.019 233.457 L 271.519 227.834 L 279.467 223.917 L 287.415 220 L 300.019 220 L 312.623 220 L 320.571 223.917 L 328.519 227.834 L 334.019 233.457 L 339.519 239.08 L 342.236 244.115 L 344.953 249.15 L 346.486 255.035 L 348.019 260.92 L 348.019 267 L 348.019 273.08 L 346.486 278.965 L 344.953 284.85 L 342.27 289.779 C 340.794 292.49 337.884 296.643 335.803 299.007 L 332.019 303.307 L 332.019 304.84 L 418.019 537.503 L 418.019 538.5 L 182.019 538.5 Z M 371.596 506.159 L 372.111 504.818 L 362.735 480.75 L 361.774 479.5 L 238.264 479.5 L 237.303 480.75 L 227.927 504.818 L 228.442 506.159 L 228.957 507.5 L 371.083 507.5 Z M 350.92 451.582 L 352.322 450.694 L 342.876 425.5 L 257.163 425.5 L 247.716 450.694 L 249.118 451.582 L 250.52 452.47 L 349.52 452.47 Z M 329.453 392.605 L 330.006 391.71 L 300.019 317 L 270.031 391.71 L 270.584 392.605 L 271.137 393.5 L 328.901 393.5 Z"
+                    android:fillColor="#2f2f2f"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="wave_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="200"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="wave_2">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:startOffset="200"
+                android:duration="200"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="wave_3">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:startOffset="400"
+                android:duration="200"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
