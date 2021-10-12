@@ -26,6 +26,12 @@ android {
 
         def endpoint = "\"http://alberto97.altervista.org/arpav/v1/impianti.json\""
         buildConfigField "String", "ENDPOINT_URL", (secureProps.getProperty("ENDPOINT_URL") ?: endpoint)
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
