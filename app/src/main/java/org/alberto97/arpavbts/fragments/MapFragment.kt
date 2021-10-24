@@ -26,7 +26,7 @@ import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
-import org.alberto97.arpavbts.tools.IGestoriUtils
+import org.alberto97.arpavbts.tools.IOperatorConfig
 import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
@@ -39,7 +39,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     private lateinit var binding: FragmentMapBinding
 
     @Inject
-    lateinit var gestoriUtils: IGestoriUtils
+    lateinit var operatorConfig: IOperatorConfig
 
     // Bottom Behavior
     private lateinit var btsBehavior: BottomSheetBehavior<LinearLayout>
@@ -115,7 +115,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         })
 
         // Setup custom marker renderer for multiple marker colors
-        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager(), gestoriUtils)
+        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager(), operatorConfig)
         renderer.minClusterSize = 2
         getClusterManager().renderer = renderer
 

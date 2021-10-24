@@ -10,13 +10,13 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.tools.Extensions.toHue
-import org.alberto97.arpavbts.tools.IGestoriUtils
+import org.alberto97.arpavbts.tools.IOperatorConfig
 
 class MarkerRenderer(
     private val context: Context,
     map: GoogleMap,
     clusterManager: ClusterManager<ClusterItemData>,
-    private val utils: IGestoriUtils
+    private val operatorConfig: IOperatorConfig
 ) :
     DefaultClusterRenderer<ClusterItemData>(context, map, clusterManager) {
 
@@ -32,7 +32,7 @@ class MarkerRenderer(
     )
 
     override fun onBeforeClusterItemRendered(item: ClusterItemData, markerOptions: MarkerOptions) {
-        val color = utils.getColor(item.data.gestore).toHue()
+        val color = operatorConfig.getColor(item.data.gestore).toHue()
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color))
         super.onBeforeClusterItemRendered(item, markerOptions)
     }

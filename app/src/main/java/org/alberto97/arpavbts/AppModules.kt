@@ -14,8 +14,8 @@ import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.repositories.GestoreRepository
 import org.alberto97.arpavbts.repositories.IGestoreRepository
 import org.alberto97.arpavbts.tools.ArpavApi
-import org.alberto97.arpavbts.tools.GestoriUtils
-import org.alberto97.arpavbts.tools.IGestoriUtils
+import org.alberto97.arpavbts.tools.OperatorConfig
+import org.alberto97.arpavbts.tools.IOperatorConfig
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -24,7 +24,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
     @Binds
-    abstract fun provideGestoriUtils(utils: GestoriUtils): IGestoriUtils
+    abstract fun provideOperatorConfig(utils: OperatorConfig): IOperatorConfig
 
     @Binds
     abstract fun provideGestoreRepository(repository: GestoreRepository): IGestoreRepository

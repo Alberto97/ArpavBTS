@@ -13,13 +13,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-interface IGestoriUtils {
+interface IOperatorConfig {
     fun getColor(gestore: String): Int
     fun getPreferred(): List<GestoreConfigModel>
 }
 
 @Singleton
-class GestoriUtils @Inject constructor(@ApplicationContext val context: Context) : IGestoriUtils {
+class OperatorConfig @Inject constructor(@ApplicationContext val context: Context) : IOperatorConfig {
 
     private val gestoreList: List<GestoreConfigModel>
     private val gestoreMap: Map<String, GestoreConfigModel>
