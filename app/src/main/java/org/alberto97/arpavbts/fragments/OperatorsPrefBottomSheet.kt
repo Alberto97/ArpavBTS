@@ -13,12 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.DialogOperatorsPrefBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.viewmodels.MapViewModel
+import org.alberto97.arpavbts.viewmodels.OperatorsPreferredViewModel
 
 @AndroidEntryPoint
 class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
 
-    private val viewModel: MapViewModel by activityViewModels()
+    private val viewModel: OperatorsPreferredViewModel by activityViewModels()
     private lateinit var binding: DialogOperatorsPrefBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -29,7 +29,7 @@ class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = viewModel.getPreferredCarrier()
+        val list = viewModel.operators
         val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }
         binding.recyclerView.adapter = adapter
         adapter.submitList(list)

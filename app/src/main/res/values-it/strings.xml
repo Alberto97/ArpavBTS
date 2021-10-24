@@ -7,7 +7,6 @@
 
     <!-- operators -->
     <string name="operators_pick">Scegli operatore</string>
-    <string name="operators_all">Tutti</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Aggiornamenti torri</string>

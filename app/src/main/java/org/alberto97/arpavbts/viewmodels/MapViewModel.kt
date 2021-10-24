@@ -1,7 +1,6 @@
 package org.alberto97.arpavbts.viewmodels
 
 import android.app.Application
-import android.graphics.Color
 import androidx.lifecycle.*
 import androidx.work.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +11,6 @@ import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.models.GestoreConfigModel
 import org.alberto97.arpavbts.tools.IOperatorConfig
 import org.alberto97.arpavbts.workers.DownloadWorker
 import org.alberto97.arpavbts.workers.DownloadWorkerConstants
@@ -26,6 +24,8 @@ class MapViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _selectedOperator = MutableLiveData<String?>(null)
+    val selectedOperator: LiveData<String?> = _selectedOperator
+
     val btsList: LiveData<List<ClusterItemData>> = _selectedOperator.switchMap { carrier ->
         btsRepo.getBts(carrier).map { list ->
             list.map { item -> ClusterItemData(item) }
@@ -38,6 +38,10 @@ class MapViewModel @Inject constructor(
 
     init {
         updateDb()
+    }
+
+    fun clearOperator() {
+        _selectedOperator.value = null
     }
 
     fun selectOperator(id: String?) {
@@ -69,23 +73,6 @@ class MapViewModel @Inject constructor(
             )
         }
         gestoreData.value = list
-    }
-
-    fun getPreferredCarrier(): List<GestoreAdapterItem> {
-        val all = GestoreAdapterItem(
-            Color.parseColor("#EEEEEE"),
-            app.getString(R.string.operators_all),
-            null
-        )
-
-        val list = operatorConfig.getPreferred().map { mapCarrier(it) }.toMutableList()
-        list.add(0, all)
-
-        return list
-    }
-
-    private fun mapCarrier(data: GestoreConfigModel): GestoreAdapterItem {
-        return GestoreAdapterItem(data.color, data.label, data.rawName)
     }
 
     fun updateDb(forceUpdate: Boolean = false) {

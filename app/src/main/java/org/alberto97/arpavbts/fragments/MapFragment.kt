@@ -81,8 +81,22 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
             onMenuItemClick(it)
         }
 
+        fabSetup()
         btsBottomSheetSetup()
         gestoreBottomSheetSetup()
+    }
+
+    private fun fabSetup() {
+        binding.fab.setOnClickListener {
+            viewModel.clearOperator()
+        }
+
+        viewModel.selectedOperator.observe(viewLifecycleOwner) { operator ->
+            if (operator.isNullOrEmpty())
+                binding.fab.hide()
+            else
+                binding.fab.show()
+        }
     }
 
     private fun btsBottomSheetSetup() {
@@ -229,19 +243,33 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     }
 
     private fun showBtsBottomBehavior(show: Boolean) {
-        btsBehavior.state = if (show) {
+        btsBehavior.state = handleBottomSheetVisibility(show)
+    }
+
+    private fun showGestoreBottomBehavior(show: Boolean) {
+        gestoreBehavior.state = handleBottomSheetVisibility(show)
+    }
+
+    private fun handleBottomSheetVisibility(show: Boolean): Int {
+        return if (show) {
+            showFab(false)
             BottomSheetBehavior.STATE_EXPANDED
         } else {
+            showFab(true)
             BottomSheetBehavior.STATE_HIDDEN
         }
     }
 
-    private fun showGestoreBottomBehavior(show: Boolean) {
-        gestoreBehavior.state = if (show) {
-            BottomSheetBehavior.STATE_EXPANDED
-        } else {
-            BottomSheetBehavior.STATE_HIDDEN
-        }
+    private fun showFab(show: Boolean) {
+        if (!isFilterActive()) return
+        if (show)
+            binding.fab.show()
+        else
+            binding.fab.hide()
+    }
+
+    private fun isFilterActive(): Boolean {
+        return !viewModel.selectedOperator.value.isNullOrEmpty()
     }
 
     private fun onMenuItemClick(item: MenuItem): Boolean {
