@@ -13,7 +13,6 @@ import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.models.GestoreConfigModel
-import org.alberto97.arpavbts.repositories.IGestoreRepository
 import org.alberto97.arpavbts.tools.IGestoriUtils
 import org.alberto97.arpavbts.workers.DownloadWorker
 import org.alberto97.arpavbts.workers.DownloadWorkerConstants
@@ -23,8 +22,7 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val app: Application,
     private val btsRepo: IBtsRepository,
-    private val gestoriUtils: IGestoriUtils,
-    private val gestoreRepo: IGestoreRepository
+    private val gestoriUtils: IGestoriUtils
 ) : ViewModel() {
 
     private val _carrierInput = MutableLiveData<String?>()
@@ -80,7 +78,7 @@ class MapViewModel @Inject constructor(
             null
         )
 
-        val list = gestoreRepo.getPreferred().map { mapCarrier(it) }.toMutableList()
+        val list = gestoriUtils.getPreferred().map { mapCarrier(it) }.toMutableList()
         list.add(0, all)
 
         return list
