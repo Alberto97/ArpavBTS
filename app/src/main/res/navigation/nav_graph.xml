@@ -23,5 +23,14 @@
             android:id="@+id/operatorsPrefBottomSheet"
             android:name="org.alberto97.arpavbts.fragments.OperatorsPrefBottomSheet"
             android:label="OperatorsPrefBottomSheet"
-            tools:layout="@layout/dialog_operators_pref" />
+            tools:layout="@layout/dialog_operators_pref" >
+        <action
+                android:id="@+id/action_operators_pref_to_operators"
+                app:destination="@id/operatorsFragment" />
+    </dialog>
+    <fragment
+            android:id="@+id/operatorsFragment"
+            android:name="org.alberto97.arpavbts.fragments.OperatorsFragment"
+            android:label="@string/operators_title"
+            tools:layout="@layout/fragment_operators" />
 </navigation>

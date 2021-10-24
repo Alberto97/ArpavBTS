@@ -10,6 +10,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.GestoreAdapter
 import org.alberto97.arpavbts.databinding.DialogOperatorsPrefBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
@@ -33,6 +34,10 @@ class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
         val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }
         binding.recyclerView.adapter = adapter
         adapter.submitList(list)
+
+        binding.more.setOnClickListener {
+            findNavController().navigate(R.id.action_operators_pref_to_operators)
+        }
     }
 
     private fun onGestoreClick(data: GestoreAdapterItem) {

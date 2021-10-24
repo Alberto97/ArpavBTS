@@ -15,6 +15,7 @@ import javax.inject.Singleton
 
 interface IOperatorConfig {
     fun getColor(gestore: String): Int
+    fun getName(gestore: String): String
     fun getPreferred(): List<GestoreConfigModel>
 }
 
@@ -40,6 +41,11 @@ class OperatorConfig @Inject constructor(@ApplicationContext val context: Contex
     override fun getColor(gestore: String): Int {
         val data = gestoreMap[gestore] ?: return Color.parseColor("#64dd17")
         return data.color
+    }
+
+    override fun getName(gestore: String): String {
+        val data = gestoreMap[gestore] ?: return gestore
+        return data.label
     }
 
     override fun getPreferred(): List<GestoreConfigModel> {

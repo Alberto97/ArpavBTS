@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Remove once https://github.com/material-components/material-components-android/issues/1396 is fixed-->
+    <style name="ThemeOverlay.AppTheme.Toolbar.PrimarySurface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface" />
+</resources>

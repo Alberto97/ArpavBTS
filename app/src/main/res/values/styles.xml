@@ -1,0 +1,8 @@
+<resources>
+    <!-- Remove once https://github.com/material-components/material-components-android/issues/1396 is fixed-->
+    <style name="ThemeOverlay.AppTheme.Toolbar.PrimarySurface" parent="ThemeOverlay.AppTheme.Toolbar.Primary" />
+
+    <style name="ThemeOverlay.AppTheme.Toolbar.Primary" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:editTextColor">?attr/colorOnPrimary</item>
+    </style>
+</resources>

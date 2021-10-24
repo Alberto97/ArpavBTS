@@ -1,0 +1,105 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "b10d6efc2cc294d5ca845dc93872809d",
+    "entities": [
+      {
+        "tableName": "bts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idImpianto` INTEGER NOT NULL, `codice` TEXT NOT NULL, `nome` TEXT NOT NULL, `gestore` TEXT NOT NULL, `indirizzo` TEXT NOT NULL, `comune` TEXT NOT NULL, `provincia` TEXT NOT NULL, `latitudine` REAL NOT NULL, `longitudine` REAL NOT NULL, `quotaSlm` REAL NOT NULL, `postazione` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "fields": [
+          {
+            "fieldPath": "idImpianto",
+            "columnName": "idImpianto",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "codice",
+            "columnName": "codice",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gestore",
+            "columnName": "gestore",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indirizzo",
+            "columnName": "indirizzo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comune",
+            "columnName": "comune",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "provincia",
+            "columnName": "provincia",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitudine",
+            "columnName": "latitudine",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitudine",
+            "columnName": "longitudine",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quotaSlm",
+            "columnName": "quotaSlm",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postazione",
+            "columnName": "postazione",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [
+      {
+        "viewName": "operatorView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT gestore as name, count(*) as towers FROM bts GROUP BY gestore"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b10d6efc2cc294d5ca845dc93872809d')"
+    ]
+  }
+}

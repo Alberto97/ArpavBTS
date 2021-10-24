@@ -6,7 +6,9 @@
     <string name="bts_cluster_title">Torri in questo cluster</string>
 
     <!-- operators -->
+    <string name="operators_title">Operatori</string>
     <string name="operators_pick">Scegli operatore</string>
+    <string name="operators_see_all">Mostra tutti</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Aggiornamenti torri</string>

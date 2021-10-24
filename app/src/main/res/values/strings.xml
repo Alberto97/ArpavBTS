@@ -9,7 +9,9 @@
     <string name="bts_cluster_title">Towers in this cluster</string>
 
     <!-- Operators -->
+    <string name="operators_title">Operators</string>
     <string name="operators_pick">Pick operator</string>
+    <string name="operators_see_all">See all</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Towers updates</string>
