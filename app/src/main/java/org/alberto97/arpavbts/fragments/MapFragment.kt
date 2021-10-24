@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -31,6 +32,14 @@ import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
 
+object MapRequestKey {
+    const val PICK_OPERATOR = "PICK_OPERATOR"
+}
+
+object PickOperatorResultKey {
+    const val OPERATOR = "operator"
+}
+
 @AndroidEntryPoint
 class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
@@ -46,12 +55,26 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
     private val clusterBts = arrayListOf<ClusterItemData>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setFragmentResultListener(MapRequestKey.PICK_OPERATOR) { _, bundle ->
+            val result = bundle.getString(PickOperatorResultKey.OPERATOR)
+            viewModel.selectOperator(result)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMapBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.setupWithNavController(findNavController())
         binding.toolbar.setOnMenuItemClickListener {
@@ -60,8 +83,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
         btsBottomSheetSetup()
         gestoreBottomSheetSetup()
-
-        return binding.root
     }
 
     private fun btsBottomSheetSetup() {
@@ -130,7 +151,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         getMap().setOnMapClickListener { onMapClick() }
 
         // Fetch data
-        viewModel.getBtsByCarrier(null)
+        viewModel.selectOperator(null)
     }
 
     private fun onMapClick() {

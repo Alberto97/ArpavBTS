@@ -25,8 +25,8 @@ class MapViewModel @Inject constructor(
     private val operatorConfig: IOperatorConfig
 ) : ViewModel() {
 
-    private val _carrierInput = MutableLiveData<String?>()
-    val btsList: LiveData<List<ClusterItemData>> = _carrierInput.switchMap { carrier ->
+    private val _selectedOperator = MutableLiveData<String?>()
+    val btsList: LiveData<List<ClusterItemData>> = _selectedOperator.switchMap { carrier ->
         btsRepo.getBts(carrier).map { list ->
             list.map { item -> ClusterItemData(item) }
         }.asLiveData()
@@ -40,8 +40,8 @@ class MapViewModel @Inject constructor(
         updateDb()
     }
 
-    fun getBtsByCarrier(id: String?) {
-        _carrierInput.value = id
+    fun selectOperator(id: String?) {
+        _selectedOperator.value = id
     }
 
     fun setBtsData(data: Bts) {

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +36,10 @@ class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun onGestoreClick(data: GestoreAdapterItem) {
-        viewModel.getBtsByCarrier(data.id)
+        setFragmentResult(
+            MapRequestKey.PICK_OPERATOR,
+            bundleOf(PickOperatorResultKey.OPERATOR to data.id)
+        )
         findNavController().popBackStack()
     }
 }
