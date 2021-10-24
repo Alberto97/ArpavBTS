@@ -3,6 +3,8 @@ package org.alberto97.arpavbts.viewmodels
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.work.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import org.alberto97.arpavbts.R
@@ -35,6 +37,8 @@ class MapViewModel @Inject constructor(
     val btsDataTitle = MutableLiveData<String>()
     val btsData = MutableLiveData<List<BTSDetailsAdapterItem>>()
     val gestoreData = MutableLiveData<List<GestoreAdapterItem>>()
+
+    private var lastCameraPosition: CameraPosition? = null
 
     init {
         updateDb()
@@ -84,5 +88,21 @@ class MapViewModel @Inject constructor(
             setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         }
         WorkManager.getInstance(app).enqueue(downloadWork.build())
+    }
+
+    fun setCameraPosition(cameraPosition: CameraPosition) {
+        lastCameraPosition = cameraPosition
+    }
+
+    // TODO: Persist the camera state across app restarts
+    fun getLastCameraPosition(): CameraPosition {
+        if (lastCameraPosition != null)
+            return lastCameraPosition!!
+
+        val venetoPosition = LatLng(45.6736317, 11.9941753)
+        return CameraPosition.Builder()
+            .target(venetoPosition)
+            .zoom(7f)
+            .build()
     }
 }

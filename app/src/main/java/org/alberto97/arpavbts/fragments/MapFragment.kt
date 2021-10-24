@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
@@ -154,14 +153,18 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         getClusterManager().renderer = renderer
 
         if (mapViewBundle == null) {
-            // Move camera to Veneto
-            getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(45.6736317,11.9941753), 7f))
+            val lastPosition = viewModel.getLastCameraPosition()
+            val cameraUpdate = CameraUpdateFactory.newCameraPosition(lastPosition)
+            getMap().moveCamera(cameraUpdate)
         }
 
         // Setup various listeners
         getClusterManager().setOnClusterClickListener { cluster -> onClusterClick(cluster) }
         getClusterManager().setOnClusterItemClickListener { item -> onClusterItemClick(item) }
-        getMap().setOnCameraIdleListener(getClusterManager())
+        getMap().setOnCameraIdleListener {
+            viewModel.setCameraPosition(getMap().cameraPosition)
+            getClusterManager().onCameraIdle()
+        }
         getMap().setOnMapClickListener { onMapClick() }
     }
 
