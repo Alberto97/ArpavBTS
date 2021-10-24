@@ -8,9 +8,9 @@
     <string name="bts_action_about">@string/about_title</string>
     <string name="bts_cluster_title">Towers in this cluster</string>
 
-    <!-- Provider -->
-    <string name="provider_pick">Pick provider</string>
-    <string name="provider_all">All</string>
+    <!-- Operators -->
+    <string name="operators_pick">Pick operator</string>
+    <string name="operators_all">All</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Towers updates</string>

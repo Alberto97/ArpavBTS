@@ -1,4 +1,4 @@
-package org.alberto97.arpavbts.ui
+package org.alberto97.arpavbts.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,24 +8,28 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.alberto97.arpavbts.adapters.GestoreAdapter
-import org.alberto97.arpavbts.databinding.DialogGestoreBinding
+import org.alberto97.arpavbts.databinding.DialogOperatorsPrefBinding
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 
 @AndroidEntryPoint
-class GestoreBottomSheetDialog : BottomSheetDialogFragment() {
+class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
 
     private val viewModel: MapViewModel by activityViewModels()
+    private lateinit var binding: DialogOperatorsPrefBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = DialogGestoreBinding.inflate(inflater, container, false)
+        binding = DialogOperatorsPrefBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val list = viewModel.getPreferredCarrier()
         val adapter = GestoreAdapter { gestore -> onGestoreClick(gestore) }
         binding.recyclerView.adapter = adapter
         adapter.submitList(list)
-
-        return binding.root
     }
 
     private fun onGestoreClick(data: GestoreAdapterItem) {

@@ -5,9 +5,9 @@
     <string name="bts_action_about">Info</string>
     <string name="bts_cluster_title">Torri in questo cluster</string>
 
-    <!-- Provider -->
-    <string name="provider_pick">Scegli gestore</string>
-    <string name="provider_all">Tutti</string>
+    <!-- operators -->
+    <string name="operators_pick">Scegli operatore</string>
+    <string name="operators_all">Tutti</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Aggiornamenti torri</string>

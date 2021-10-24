@@ -27,7 +27,6 @@ import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
 import org.alberto97.arpavbts.tools.IOperatorConfig
-import org.alberto97.arpavbts.ui.GestoreBottomSheetDialog
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
@@ -230,7 +229,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     private fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_providers -> {
-                val dialog = GestoreBottomSheetDialog()
+                val dialog = OperatorsPrefBottomSheet()
                 dialog.showNow(parentFragmentManager, "")
                 true
             }

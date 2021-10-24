@@ -74,7 +74,7 @@ class MapViewModel @Inject constructor(
     fun getPreferredCarrier(): List<GestoreAdapterItem> {
         val all = GestoreAdapterItem(
             Color.parseColor("#EEEEEE"),
-            app.getString(R.string.provider_all),
+            app.getString(R.string.operators_all),
             null
         )
 
