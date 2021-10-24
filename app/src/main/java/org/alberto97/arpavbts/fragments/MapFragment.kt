@@ -149,9 +149,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         getClusterManager().setOnClusterItemClickListener { item -> onClusterItemClick(item) }
         getMap().setOnCameraIdleListener(getClusterManager())
         getMap().setOnMapClickListener { onMapClick() }
-
-        // Fetch data
-        viewModel.selectOperator(null)
     }
 
     private fun onMapClick() {

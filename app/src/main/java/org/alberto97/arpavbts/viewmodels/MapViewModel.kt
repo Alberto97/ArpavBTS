@@ -25,7 +25,7 @@ class MapViewModel @Inject constructor(
     private val operatorConfig: IOperatorConfig
 ) : ViewModel() {
 
-    private val _selectedOperator = MutableLiveData<String?>()
+    private val _selectedOperator = MutableLiveData<String?>(null)
     val btsList: LiveData<List<ClusterItemData>> = _selectedOperator.switchMap { carrier ->
         btsRepo.getBts(carrier).map { list ->
             list.map { item -> ClusterItemData(item) }
