@@ -32,12 +32,22 @@
     {
       "label": "Linkem",
       "rawName": "LINKEM",
-      "color": "#E2E8F0"
+      "color": "#ee5340"
     },
     {
       "label": "Fastweb Air",
       "rawName": "FastwebAir",
       "color": "#FFC726"
+    },
+    {
+      "label": "Elettronica Industriale",
+      "rawName": "Elettronica Industriale",
+      "color": "#0377ba"
+    },
+    {
+      "label": "RFI",
+      "rawName": "RFI (RETE FERROVIA ITALIANA)",
+      "color": "#006c67"
     }
   ]
 }
