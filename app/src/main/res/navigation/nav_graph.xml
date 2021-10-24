@@ -11,9 +11,17 @@
         <action
                 android:id="@+id/action_map_to_about"
                 app:destination="@id/aboutFragment" />
+        <action
+                android:id="@+id/action_map_to_operators_pref"
+                app:destination="@id/operatorsPrefBottomSheet" />
     </fragment>
     <fragment
             android:id="@+id/aboutFragment"
             android:name="org.alberto97.arpavbts.fragments.AboutFragmentWrapper"
             android:label="@string/about_title" />
+    <dialog
+            android:id="@+id/operatorsPrefBottomSheet"
+            android:name="org.alberto97.arpavbts.fragments.OperatorsPrefBottomSheet"
+            android:label="OperatorsPrefBottomSheet"
+            tools:layout="@layout/dialog_operators_pref" />
 </navigation>

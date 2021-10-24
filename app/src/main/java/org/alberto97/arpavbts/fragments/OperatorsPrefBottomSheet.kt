@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.alberto97.arpavbts.adapters.GestoreAdapter
@@ -34,6 +35,6 @@ class OperatorsPrefBottomSheet : BottomSheetDialogFragment() {
 
     private fun onGestoreClick(data: GestoreAdapterItem) {
         viewModel.getBtsByCarrier(data.id)
-        this.dismiss()
+        findNavController().popBackStack()
     }
 }

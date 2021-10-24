@@ -229,8 +229,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     private fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_providers -> {
-                val dialog = OperatorsPrefBottomSheet()
-                dialog.showNow(parentFragmentManager, "")
+                findNavController().navigate(R.id.action_map_to_operators_pref)
                 true
             }
             R.id.action_update -> {
