@@ -8,8 +8,7 @@ abstract class MapBaseActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         onMapReady()
     }
