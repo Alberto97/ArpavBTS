@@ -1,8 +1,8 @@
 package org.alberto97.arpavbts.adapters
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +25,7 @@ class OperatorAdapter(val onClick: (OperatorModel) -> Unit) :
 
         fun bind(item: OperatorModel) {
             binding.root.setOnClickListener { onClick(item) }
-            binding.icon.imageTintList = ColorStateList.valueOf(item.color)
+            TextViewCompat.setCompoundDrawableTintList(binding.label, ColorStateList.valueOf(item.color))
             binding.label.text = item.name
             binding.towers.text = item.towers.toString()
         }

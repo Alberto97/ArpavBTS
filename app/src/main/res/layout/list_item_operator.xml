@@ -13,35 +13,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-            android:id="@+id/layout"
+    <TextView
+            android:id="@+id/label"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:drawablePadding="16dp"
+            android:maxLines="1"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/towers"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-        <ImageView
-                android:id="@+id/icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_circle"
-                app:layout_constraintBaseline_toBaselineOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-                android:id="@+id/label"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:maxLines="1"
-                app:layout_constraintHorizontal_bias="0" />
-    </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_circle_icon" />
 
     <TextView
             android:id="@+id/towers"

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.alberto97.arpavbts.databinding.ListItemBtsBinding
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.getInflater
+import org.alberto97.arpavbts.tools.Extensions.setStartDrawable
 
 class BTSAdapter : ListAdapter<BTSDetailsAdapterItem, BTSAdapter.ViewHolder>(BTSDetailsDiff()) {
 
@@ -17,8 +18,8 @@ class BTSAdapter : ListAdapter<BTSDetailsAdapterItem, BTSAdapter.ViewHolder>(BTS
 
     class ViewHolder(private val binding: ListItemBtsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: BTSDetailsAdapterItem) {
-            binding.detailIcon.setImageResource(item.icon)
-            binding.detailText.text = item.text
+            binding.item.text = item.text
+            binding.item.setStartDrawable(item.icon)
         }
     }
 }

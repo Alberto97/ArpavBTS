@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.core.graphics.ColorUtils
 
@@ -30,4 +32,8 @@ object Extensions {
 
     fun Resources.readRawTextFile(@RawRes id: Int): String =
         openRawResource(id).bufferedReader().use { it.readText() }
+
+    fun TextView.setStartDrawable(@DrawableRes value: Int) {
+        return setCompoundDrawablesRelativeWithIntrinsicBounds(value, 0, 0, 0)
+    }
 }

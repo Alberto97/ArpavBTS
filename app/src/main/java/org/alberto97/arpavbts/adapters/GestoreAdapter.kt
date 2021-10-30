@@ -2,6 +2,7 @@ package org.alberto97.arpavbts.adapters
 
 import android.content.res.ColorStateList
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,7 @@ class GestoreAdapter(val listener: (GestoreAdapterItem) -> Unit) :
     inner class ViewHolder(private val binding: ListItemGestoreBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: GestoreAdapterItem) {
             binding.root.setOnClickListener { listener(item) }
-            binding.icon.imageTintList = ColorStateList.valueOf(item.color)
+            TextViewCompat.setCompoundDrawableTintList(binding.label, ColorStateList.valueOf(item.color))
             binding.label.text = item.name
         }
     }
