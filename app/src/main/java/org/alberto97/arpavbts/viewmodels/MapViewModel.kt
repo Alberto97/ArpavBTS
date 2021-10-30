@@ -29,6 +29,12 @@ class MapViewModel @Inject constructor(
     private val mapStateStored: IMapStateStored
 ) : ViewModel() {
 
+    private val venetoPosition = LatLng(45.6736317, 11.9941753)
+    val defaultCameraPosition = CameraPosition.Builder()
+        .target(venetoPosition)
+        .zoom(7f)
+        .build()
+
     private val _selectedOperator = MutableLiveData<String?>(null)
     val selectedOperator: LiveData<String?> = _selectedOperator
 
@@ -103,15 +109,7 @@ class MapViewModel @Inject constructor(
         if (lastCameraPosition != null)
             return lastCameraPosition!!
 
-        return getPersistedCameraPosition() ?: getDefaultPosition()
-    }
-
-    fun getDefaultPosition(): CameraPosition {
-        val venetoPosition = LatLng(45.6736317, 11.9941753)
-        return CameraPosition.Builder()
-            .target(venetoPosition)
-            .zoom(7f)
-            .build()
+        return getPersistedCameraPosition() ?: defaultCameraPosition
     }
 
     private fun getPersistedCameraPosition(): CameraPosition? {

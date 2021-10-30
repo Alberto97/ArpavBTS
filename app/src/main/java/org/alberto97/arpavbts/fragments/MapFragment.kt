@@ -282,7 +282,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
                 true
             }
             R.id.action_map_reset -> {
-                val defaultPosition = viewModel.getDefaultPosition()
+                val defaultPosition = viewModel.defaultCameraPosition
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(defaultPosition)
                 getMap().animateCamera(cameraUpdate)
                 true
