@@ -9,6 +9,7 @@
     <string name="operators_title">Operatori</string>
     <string name="operators_pick">Scegli operatore</string>
     <string name="operators_see_all">Mostra tutti</string>
+    <string name="map_action_reset">Reimposta Mappa</string>
 
     <!-- Notifications -->
     <string name="bts_update_notification_channel">Aggiornamenti torri</string>

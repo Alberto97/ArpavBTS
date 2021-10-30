@@ -99,6 +99,10 @@ class MapViewModel @Inject constructor(
         if (lastCameraPosition != null)
             return lastCameraPosition!!
 
+        return getDefaultPosition()
+    }
+
+    fun getDefaultPosition(): CameraPosition {
         val venetoPosition = LatLng(45.6736317, 11.9941753)
         return CameraPosition.Builder()
             .target(venetoPosition)

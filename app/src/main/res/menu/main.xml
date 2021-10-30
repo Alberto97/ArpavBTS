@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_providers"
-            android:icon="@drawable/ic_filter_list_white_24dp"
-            app:showAsAction="ifRoom"
-            android:title="@string/bts_action_filter"/>
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/bts_action_filter"/>
+
+    <item android:id="@+id/action_map_reset"
+        android:title="@string/map_action_reset"
+        app:showAsAction="never" />
 
     <item android:id="@+id/action_update"
         app:showAsAction="never"

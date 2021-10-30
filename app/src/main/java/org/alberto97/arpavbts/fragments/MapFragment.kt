@@ -281,6 +281,12 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
                 findNavController().navigate(R.id.action_map_to_operators_pref)
                 true
             }
+            R.id.action_map_reset -> {
+                val defaultPosition = viewModel.getDefaultPosition()
+                val cameraUpdate = CameraUpdateFactory.newCameraPosition(defaultPosition)
+                getMap().animateCamera(cameraUpdate)
+                true
+            }
             R.id.action_update -> {
                 viewModel.updateDb(forceUpdate = true)
                 true

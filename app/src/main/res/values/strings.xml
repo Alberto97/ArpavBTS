@@ -7,6 +7,7 @@
     <string name="bts_action_update">Update</string>
     <string name="bts_action_about">@string/about_title</string>
     <string name="bts_cluster_title">Towers in this cluster</string>
+    <string name="map_action_reset">Reset Map</string>
 
     <!-- Operators -->
     <string name="operators_title">Operators</string>
