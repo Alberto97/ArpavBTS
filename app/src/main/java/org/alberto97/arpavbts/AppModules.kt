@@ -14,9 +14,7 @@ import org.alberto97.arpavbts.db.BtsRepository
 import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.repositories.IOperatorRepository
 import org.alberto97.arpavbts.repositories.OperatorRepository
-import org.alberto97.arpavbts.tools.ArpavApi
-import org.alberto97.arpavbts.tools.OperatorConfig
-import org.alberto97.arpavbts.tools.IOperatorConfig
+import org.alberto97.arpavbts.tools.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -32,6 +30,9 @@ abstract class AppModule {
 
     @Binds
     abstract fun provideBtsRepository(repository: BtsRepository): IBtsRepository
+
+    @Binds
+    abstract fun provideMapStateStored(datastore: MapStateStored): IMapStateStored
 }
 
 @Module

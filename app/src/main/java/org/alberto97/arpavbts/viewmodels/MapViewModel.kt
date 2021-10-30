@@ -7,12 +7,15 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
+import org.alberto97.arpavbts.tools.IMapStateStored
 import org.alberto97.arpavbts.tools.IOperatorConfig
 import org.alberto97.arpavbts.workers.DownloadWorker
 import org.alberto97.arpavbts.workers.DownloadWorkerConstants
@@ -22,7 +25,8 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val app: Application,
     private val btsRepo: IBtsRepository,
-    private val operatorConfig: IOperatorConfig
+    private val operatorConfig: IOperatorConfig,
+    private val mapStateStored: IMapStateStored
 ) : ViewModel() {
 
     private val _selectedOperator = MutableLiveData<String?>(null)
@@ -92,14 +96,14 @@ class MapViewModel @Inject constructor(
 
     fun setCameraPosition(cameraPosition: CameraPosition) {
         lastCameraPosition = cameraPosition
+        saveMapState()
     }
 
-    // TODO: Persist the camera state across app restarts
     fun getLastCameraPosition(): CameraPosition {
         if (lastCameraPosition != null)
             return lastCameraPosition!!
 
-        return getDefaultPosition()
+        return getPersistedCameraPosition() ?: getDefaultPosition()
     }
 
     fun getDefaultPosition(): CameraPosition {
@@ -108,5 +112,22 @@ class MapViewModel @Inject constructor(
             .target(venetoPosition)
             .zoom(7f)
             .build()
+    }
+
+    private fun getPersistedCameraPosition(): CameraPosition? {
+        val value = runBlocking { mapStateStored.getMapState() } ?: return null
+        val lastPosition = LatLng(value.lat, value.lon)
+        return CameraPosition.Builder()
+            .target(lastPosition)
+            .zoom(value.zoom)
+            .build()
+    }
+
+    private fun saveMapState() {
+        val target = lastCameraPosition?.target ?: return
+        val zoom = lastCameraPosition?.zoom ?: return
+        viewModelScope.launch {
+            mapStateStored.setMapState(target.latitude, target.longitude, zoom)
+        }
     }
 }
