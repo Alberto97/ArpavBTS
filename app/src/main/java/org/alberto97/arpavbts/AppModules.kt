@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.alberto97.arpavbts
 
 import android.content.Context

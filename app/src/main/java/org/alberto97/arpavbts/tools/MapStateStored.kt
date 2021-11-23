@@ -21,6 +21,7 @@ data class MapState(
     val zoom: Float
 )
 
+@Suppress("BlockingMethodInNonBlockingContext")
 class MapStateSerializer : Serializer<MapState?> {
     private val adapter = Moshi.Builder().build().adapter(MapState::class.java)
 
