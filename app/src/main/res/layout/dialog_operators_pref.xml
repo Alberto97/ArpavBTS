@@ -32,15 +32,13 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
                     android:padding="16dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
                     android:maxLines="1"
                     android:text="@string/operators_see_all"
                     android:background="?attr/selectableItemBackground"
                     android:drawablePadding="16dp"
-                    app:drawableStartCompat="@drawable/ic_chevron_right_24" />
+                    app:drawableStartCompat="@drawable/ic_circle_more" />
             </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
