@@ -35,14 +35,14 @@ class GestoreDiff : DiffUtil.ItemCallback<GestoreAdapterItem>() {
         oldItem: GestoreAdapterItem,
         newItem: GestoreAdapterItem
     ): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.name == newItem.name && oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
         oldItem: GestoreAdapterItem,
         newItem: GestoreAdapterItem
     ): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.name == newItem.name && oldItem.id == newItem.id
     }
 
 }
