@@ -6,15 +6,20 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.ktx.awaitMap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,6 +32,7 @@ import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
 import org.alberto97.arpavbts.tools.IOperatorConfig
+import org.alberto97.arpavbts.ui.MapViewLifecycleHandler
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
 import javax.inject.Inject
@@ -40,13 +46,17 @@ object PickOperatorResultKey {
 }
 
 @AndroidEntryPoint
-class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
+class MapFragment : Fragment() {
 
     private val viewModel: MapViewModel by activityViewModels()
     private lateinit var binding: FragmentMapBinding
 
     @Inject
     lateinit var operatorConfig: IOperatorConfig
+
+    // Map
+    private lateinit var googleMap: GoogleMap
+    private lateinit var clusterManager: ClusterManager<ClusterItemData>
 
     // Bottom Behavior
     private lateinit var btsBehavior: BottomSheetBehavior<LinearLayout>
@@ -83,6 +93,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         fabSetup()
         btsBottomSheetSetup()
         gestoreBottomSheetSetup()
+        mapSetup()
     }
 
     private fun fabSetup() {
@@ -125,6 +136,14 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         })
     }
 
+    private fun mapSetup() {
+        MapViewLifecycleHandler(requireContext(), viewLifecycleOwner, savedStateRegistry, binding.map)
+        lifecycle.coroutineScope.launchWhenCreated {
+            googleMap = binding.map.awaitMap()
+            onMapReady()
+        }
+    }
+
     private fun setMarkers(btsList: List<ClusterItemData>) {
         with(clusterManager) {
             clearItems()
@@ -133,10 +152,8 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         }
     }
 
-    override fun getMapView() = binding.map
-
-    override fun onMapReady(mapViewBundle: Bundle?) {
-        super.onMapReady(mapViewBundle)
+    private fun onMapReady() {
+        clusterManager = ClusterManager(requireContext(), googleMap)
 
         if (requireContext().resources.configuration.isNightModeOn()) {
             val mapStyle = MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.night_map)
@@ -152,12 +169,6 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         renderer.minClusterSize = 2
         clusterManager.renderer = renderer
 
-        if (mapViewBundle == null) {
-            val lastPosition = viewModel.getLastCameraPosition()
-            val cameraUpdate = CameraUpdateFactory.newCameraPosition(lastPosition)
-            googleMap.moveCamera(cameraUpdate)
-        }
-
         // Setup various listeners
         clusterManager.setOnClusterClickListener { cluster -> onClusterClick(cluster) }
         clusterManager.setOnClusterItemClickListener { item -> onClusterItemClick(item) }
@@ -166,6 +177,18 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
             clusterManager.onCameraIdle()
         }
         googleMap.setOnMapClickListener { onMapClick() }
+
+        moveToLastPosition()
+    }
+
+    private fun moveToLastPosition() {
+        // If there is no saved map state, move to persisted position
+        val currentPosition = googleMap.cameraPosition.target
+        if (currentPosition.latitude > 1 && currentPosition.latitude > 1) return
+
+        val lastPosition = viewModel.getLastCameraPosition()
+        val cameraUpdate = CameraUpdateFactory.newCameraPosition(lastPosition)
+        googleMap.moveCamera(cameraUpdate)
     }
 
     private fun onMapClick() {
