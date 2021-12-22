@@ -17,6 +17,7 @@ abstract class MapBaseFragment : Fragment() {
 
     abstract fun getMapView(): MapView
     private lateinit var mMap: GoogleMap
+    val googleMap get() = mMap
 
     abstract fun onMapReady(mapViewBundle: Bundle?)
 
@@ -36,10 +37,6 @@ abstract class MapBaseFragment : Fragment() {
             mMap = getMapView().awaitMap()
             onMapReady(mapViewBundle)
         }
-    }
-
-    fun getMap(): GoogleMap {
-        return mMap
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

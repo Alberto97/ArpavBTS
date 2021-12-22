@@ -6,13 +6,10 @@ import com.google.maps.android.clustering.ClusterManager
 
 abstract class MapClusterBaseFragment<T : ClusterItem> : MapBaseFragment() {
 
-    private lateinit var clusterManager: ClusterManager<T>
+    private lateinit var _clusterManager: ClusterManager<T>
+    val clusterManager get() = _clusterManager
 
     override fun onMapReady(mapViewBundle: Bundle?) {
-        clusterManager = ClusterManager(requireContext(), getMap())
-    }
-
-    fun getClusterManager(): ClusterManager<T> {
-        return clusterManager
+        _clusterManager = ClusterManager(requireContext(), googleMap)
     }
 }

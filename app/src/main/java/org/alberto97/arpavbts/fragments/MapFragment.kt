@@ -126,7 +126,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
     }
 
     private fun setMarkers(btsList: List<ClusterItemData>) {
-        with(getClusterManager()) {
+        with(clusterManager) {
             clearItems()
             addItems(btsList)
             cluster() // Draw clusters
@@ -140,7 +140,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
         if (requireContext().resources.configuration.isNightModeOn()) {
             val mapStyle = MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.night_map)
-            getMap().setMapStyle(mapStyle)
+            googleMap.setMapStyle(mapStyle)
         }
 
         viewModel.btsList.observe(viewLifecycleOwner, {
@@ -148,24 +148,24 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         })
 
         // Setup custom marker renderer for multiple marker colors
-        val renderer = MarkerRenderer(requireContext(), getMap(), getClusterManager(), operatorConfig)
+        val renderer = MarkerRenderer(requireContext(), googleMap, clusterManager, operatorConfig)
         renderer.minClusterSize = 2
-        getClusterManager().renderer = renderer
+        clusterManager.renderer = renderer
 
         if (mapViewBundle == null) {
             val lastPosition = viewModel.getLastCameraPosition()
             val cameraUpdate = CameraUpdateFactory.newCameraPosition(lastPosition)
-            getMap().moveCamera(cameraUpdate)
+            googleMap.moveCamera(cameraUpdate)
         }
 
         // Setup various listeners
-        getClusterManager().setOnClusterClickListener { cluster -> onClusterClick(cluster) }
-        getClusterManager().setOnClusterItemClickListener { item -> onClusterItemClick(item) }
-        getMap().setOnCameraIdleListener {
-            viewModel.setCameraPosition(getMap().cameraPosition)
-            getClusterManager().onCameraIdle()
+        clusterManager.setOnClusterClickListener { cluster -> onClusterClick(cluster) }
+        clusterManager.setOnClusterItemClickListener { item -> onClusterItemClick(item) }
+        googleMap.setOnCameraIdleListener {
+            viewModel.setCameraPosition(googleMap.cameraPosition)
+            clusterManager.onCameraIdle()
         }
-        getMap().setOnMapClickListener { onMapClick() }
+        googleMap.setOnMapClickListener { onMapClick() }
     }
 
     private fun onMapClick() {
@@ -177,12 +177,12 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
         cluster ?: return false
 
         if (cluster.size > 50) {
-            val nextZoomLevel = getMap().cameraPosition.zoom + 1.0f
-            getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(cluster.position, nextZoomLevel))
+            val nextZoomLevel = googleMap.cameraPosition.zoom + 1.0f
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cluster.position, nextZoomLevel))
             return true
         }
 
-        getMap().animateCamera(CameraUpdateFactory.newLatLng(cluster.position))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(cluster.position))
         val res = cluster.items.toList()
         setGestoreBottom(res)
         return true
@@ -190,7 +190,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
 
     private fun onClusterItemClick(item: ClusterItemData?): Boolean {
         item ?: return false
-        getMap().animateCamera(CameraUpdateFactory.newLatLng(item.position))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(item.position))
 
         // If there's a title, cluster is a marker
         if (item.title.isNotEmpty()) {
@@ -284,7 +284,7 @@ class MapFragment : MapClusterBaseFragment<ClusterItemData>() {
             R.id.action_map_reset -> {
                 val defaultPosition = viewModel.defaultCameraPosition
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(defaultPosition)
-                getMap().animateCamera(cameraUpdate)
+                googleMap.animateCamera(cameraUpdate)
                 true
             }
             R.id.action_update -> {
