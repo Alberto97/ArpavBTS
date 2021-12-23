@@ -109,8 +109,19 @@ class MapViewModel @Inject constructor(
         state.set(MAPVIEW_BUNDLE_KEY, data)
     }
 
-    fun restoreMapState(): Bundle? {
-        return state.get<Bundle>(MAPVIEW_BUNDLE_KEY)
+    fun restoreMapState(): Bundle {
+        return state.get<Bundle>(MAPVIEW_BUNDLE_KEY) ?: getPersistedMapState()
+    }
+
+    private fun getPersistedMapState(): Bundle {
+        val position = getLastCameraPosition()
+        val camera = Bundle().apply {
+            putParcelable("camera", position)
+        }
+        val state = Bundle().apply {
+            putBundle("map_state", camera)
+        }
+        return state
     }
 
     fun setCameraPosition(cameraPosition: CameraPosition) {
@@ -118,7 +129,7 @@ class MapViewModel @Inject constructor(
         saveMapState()
     }
 
-    fun getLastCameraPosition(): CameraPosition {
+    private fun getLastCameraPosition(): CameraPosition {
         if (lastCameraPosition != null)
             return lastCameraPosition!!
 

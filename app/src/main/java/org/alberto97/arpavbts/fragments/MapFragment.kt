@@ -182,18 +182,6 @@ class MapFragment : Fragment() {
             clusterManager.onCameraIdle()
         }
         googleMap.setOnMapClickListener { onMapClick() }
-
-        moveToLastPosition()
-    }
-
-    private fun moveToLastPosition() {
-        // If there is no saved map state, move to persisted position
-        val currentPosition = googleMap.cameraPosition.target
-        if (currentPosition.latitude > 1 && currentPosition.latitude > 1) return
-
-        val lastPosition = viewModel.getLastCameraPosition()
-        val cameraUpdate = CameraUpdateFactory.newCameraPosition(lastPosition)
-        googleMap.moveCamera(cameraUpdate)
     }
 
     private fun onMapClick() {
