@@ -1,6 +1,7 @@
 package org.alberto97.arpavbts.viewmodels
 
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.work.*
 import com.google.android.gms.maps.model.CameraPosition
@@ -23,11 +24,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
+    private val state: SavedStateHandle,
     private val app: Application,
     private val btsRepo: IBtsRepository,
     private val operatorConfig: IOperatorConfig,
     private val mapStateStored: IMapStateStored
 ) : ViewModel() {
+    companion object {
+        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+    }
 
     private val venetoPosition = LatLng(45.6736317, 11.9941753)
     val defaultCameraPosition = CameraPosition.Builder()
@@ -98,6 +103,14 @@ class MapViewModel @Inject constructor(
             setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         }
         WorkManager.getInstance(app).enqueue(downloadWork.build())
+    }
+
+    fun saveMapState(data: Bundle) {
+        state.set(MAPVIEW_BUNDLE_KEY, data)
+    }
+
+    fun restoreMapState(): Bundle? {
+        return state.get<Bundle>(MAPVIEW_BUNDLE_KEY)
     }
 
     fun setCameraPosition(cameraPosition: CameraPosition) {

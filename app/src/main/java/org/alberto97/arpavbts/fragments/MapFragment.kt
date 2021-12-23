@@ -137,7 +137,12 @@ class MapFragment : Fragment() {
     }
 
     private fun mapSetup() {
-        MapViewLifecycleHandler(requireContext(), viewLifecycleOwner, savedStateRegistry, binding.map)
+        MapViewLifecycleHandler(
+            requireContext(),
+            viewLifecycleOwner,
+            binding.map,
+            { viewModel.restoreMapState() },
+            { viewModel.saveMapState(it) })
         lifecycle.coroutineScope.launchWhenCreated {
             googleMap = binding.map.awaitMap()
             onMapReady()
