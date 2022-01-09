@@ -35,6 +35,9 @@ abstract class AppModule {
 
     @Binds
     abstract fun provideMapStateStored(datastore: MapStateStored): IMapStateStored
+
+    @Binds
+    abstract fun provideMapStateManager(datastore: MapStateManagerImpl): MapStateManager
 }
 
 @Module

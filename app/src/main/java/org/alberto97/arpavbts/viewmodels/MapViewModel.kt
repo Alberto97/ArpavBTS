@@ -3,21 +3,22 @@ package org.alberto97.arpavbts.viewmodels
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.*
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkManager
 import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.db.Bts
 import org.alberto97.arpavbts.db.IBtsRepository
 import org.alberto97.arpavbts.models.BTSDetailsAdapterItem
 import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
-import org.alberto97.arpavbts.tools.IMapStateStored
 import org.alberto97.arpavbts.tools.IOperatorConfig
+import org.alberto97.arpavbts.tools.MapStateManager
 import org.alberto97.arpavbts.workers.DownloadWorker
 import org.alberto97.arpavbts.workers.DownloadWorkerConstants
 import javax.inject.Inject
@@ -28,17 +29,11 @@ class MapViewModel @Inject constructor(
     private val app: Application,
     private val btsRepo: IBtsRepository,
     private val operatorConfig: IOperatorConfig,
-    private val mapStateStored: IMapStateStored
+    private val mapStateManager: MapStateManager
 ) : ViewModel() {
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
-
-    private val venetoPosition = LatLng(45.6736317, 11.9941753)
-    val defaultCameraPosition = CameraPosition.Builder()
-        .target(venetoPosition)
-        .zoom(7f)
-        .build()
 
     private val _selectedOperator = MutableLiveData<String?>(null)
     val selectedOperator: LiveData<String?> = _selectedOperator
@@ -52,8 +47,6 @@ class MapViewModel @Inject constructor(
     val btsDataTitle = MutableLiveData<String>()
     val btsData = MutableLiveData<List<BTSDetailsAdapterItem>>()
     val gestoreData = MutableLiveData<List<GestoreAdapterItem>>()
-
-    private var lastCameraPosition: CameraPosition? = null
 
     init {
         updateDb()
@@ -110,46 +103,12 @@ class MapViewModel @Inject constructor(
     }
 
     fun restoreMapState(): Bundle {
-        return state.get<Bundle>(MAPVIEW_BUNDLE_KEY) ?: getPersistedMapState()
-    }
-
-    private fun getPersistedMapState(): Bundle {
-        val position = getLastCameraPosition()
-        val camera = Bundle().apply {
-            putParcelable("camera", position)
-        }
-        val state = Bundle().apply {
-            putBundle("map_state", camera)
-        }
-        return state
+        return state.get<Bundle>(MAPVIEW_BUNDLE_KEY) ?: mapStateManager.getMapState()
     }
 
     fun setCameraPosition(cameraPosition: CameraPosition) {
-        lastCameraPosition = cameraPosition
-        saveMapState()
-    }
-
-    private fun getLastCameraPosition(): CameraPosition {
-        if (lastCameraPosition != null)
-            return lastCameraPosition!!
-
-        return getPersistedCameraPosition() ?: defaultCameraPosition
-    }
-
-    private fun getPersistedCameraPosition(): CameraPosition? {
-        val value = runBlocking { mapStateStored.getMapState() } ?: return null
-        val lastPosition = LatLng(value.lat, value.lon)
-        return CameraPosition.Builder()
-            .target(lastPosition)
-            .zoom(value.zoom)
-            .build()
-    }
-
-    private fun saveMapState() {
-        val target = lastCameraPosition?.target ?: return
-        val zoom = lastCameraPosition?.zoom ?: return
         viewModelScope.launch {
-            mapStateStored.setMapState(target.latitude, target.longitude, zoom)
+            mapStateManager.setCameraPosition(cameraPosition)
         }
     }
 }

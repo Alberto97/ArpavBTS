@@ -32,6 +32,7 @@ import org.alberto97.arpavbts.models.ClusterItemData
 import org.alberto97.arpavbts.models.GestoreAdapterItem
 import org.alberto97.arpavbts.tools.Extensions.isNightModeOn
 import org.alberto97.arpavbts.tools.IOperatorConfig
+import org.alberto97.arpavbts.ui.DefaultCameraSettings
 import org.alberto97.arpavbts.ui.MapViewLifecycleHandler
 import org.alberto97.arpavbts.ui.MarkerRenderer
 import org.alberto97.arpavbts.viewmodels.MapViewModel
@@ -298,7 +299,7 @@ class MapFragment : Fragment() {
                 true
             }
             R.id.action_map_reset -> {
-                val defaultPosition = viewModel.defaultCameraPosition
+                val defaultPosition = DefaultCameraSettings.cameraPosition
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(defaultPosition)
                 googleMap.animateCamera(cameraUpdate)
                 true
