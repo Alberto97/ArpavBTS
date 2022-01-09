@@ -8,7 +8,6 @@ import org.alberto97.arpavbts.tools.ArpavApi
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
 
 interface IBtsRepository {
@@ -55,7 +54,6 @@ class BtsRepository @Inject constructor(
         return prefs.getLong(SharedPreferenceConstants.LAST_DB_UPDATE, 0)
     }
 
-    @OptIn(ExperimentalTime::class)
     override suspend fun updateBtsIfOldOrEmpty() {
         val isEmpty = dao.isEmpty()
         if (!isEmpty) {
