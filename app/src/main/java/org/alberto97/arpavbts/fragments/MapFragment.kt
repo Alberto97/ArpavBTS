@@ -115,15 +115,15 @@ class MapFragment : Fragment() {
         binding.btsRecyclerView.adapter = BTSAdapter()
 
         // Title
-        viewModel.btsDataTitle.observe(viewLifecycleOwner, {
+        viewModel.btsDataTitle.observe(viewLifecycleOwner) {
             binding.btsName.text = it
-        })
+        }
 
         // Recyclerview refresh
-        viewModel.btsData.observe(viewLifecycleOwner, {
+        viewModel.btsData.observe(viewLifecycleOwner) {
             val adapter = binding.btsRecyclerView.adapter as BTSAdapter
             adapter.submitList(it)
-        })
+        }
     }
 
     private fun gestoreBottomSheetSetup() {
@@ -131,10 +131,10 @@ class MapFragment : Fragment() {
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
 
         // Recyclerview refresh
-        viewModel.gestoreData.observe(viewLifecycleOwner, {
+        viewModel.gestoreData.observe(viewLifecycleOwner) {
             val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
             adapter.submitList(it)
-        })
+        }
     }
 
     private fun mapSetup() {
@@ -166,9 +166,9 @@ class MapFragment : Fragment() {
             googleMap.setMapStyle(mapStyle)
         }
 
-        viewModel.btsList.observe(viewLifecycleOwner, {
+        viewModel.btsList.observe(viewLifecycleOwner) {
             setMarkers(it)
-        })
+        }
 
         // Setup custom marker renderer for multiple marker colors
         val renderer = MarkerRenderer(requireContext(), googleMap, clusterManager, operatorConfig)

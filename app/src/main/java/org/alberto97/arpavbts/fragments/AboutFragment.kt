@@ -20,8 +20,8 @@ class AboutFragment : PreferenceFragmentCompat() {
         version?.summary = viewModel.appVersion
 
         val dbVersion = preferenceScreen.findPreference<Preference>("db_version")
-        viewModel.dbVersion.observe(this, {
+        viewModel.dbVersion.observe(this) {
             dbVersion?.summary = it
-        })
+        }
     }
 }
