@@ -35,7 +35,7 @@ class OperatorConfig @Inject constructor(@ApplicationContext val context: Contex
         val jsonData = jsonAdapter.fromJson(json) ?: throw Exception("Cannot deserialize config.json")
 
         gestoreList = jsonData.gestori
-        gestoreMap = gestoreList.map { gestore -> gestore.rawName to gestore }.toMap()
+        gestoreMap = gestoreList.associateBy { gestore -> gestore.rawName }
     }
 
     override fun getColor(gestore: String): Int {
