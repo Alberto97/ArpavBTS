@@ -2,25 +2,25 @@
   "gestori": [
     {
       "label": "TIM",
-      "rawName": "TELECOM",
+      "rawName": "Telecom Italia S.p.A.",
       "color": "#29B6F6",
       "preferred": true
     },
     {
       "label": "Vodafone",
-      "rawName": "VODAFONE",
+      "rawName": "Vodafone Italia S.p.A.",
       "color": "#FF3434",
       "preferred": true
     },
     {
       "label": "Wind Tre",
-      "rawName": "Wind Tre SpA",
+      "rawName": "Wind Tre S.p.A.",
       "color": "#FFA000",
       "preferred": true
     },
     {
       "label": "Iliad",
-      "rawName": "ILIAD ITALIA S.p.A.",
+      "rawName": "Iliad Italia S.p.A.",
       "color": "#D32F2F",
       "preferred": true
     },
@@ -31,12 +31,12 @@
     },
     {
       "label": "Linkem",
-      "rawName": "LINKEM",
+      "rawName": "Linkem S.p.A.",
       "color": "#ee5340"
     },
     {
       "label": "Fastweb Air",
-      "rawName": "FastwebAir",
+      "rawName": "Fastweb Air S.r.l.",
       "color": "#FFC726"
     },
     {
