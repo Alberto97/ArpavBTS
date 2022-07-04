@@ -99,7 +99,7 @@ class MapViewModel @Inject constructor(
     }
 
     fun saveMapState(data: Bundle) {
-        state.set(MAPVIEW_BUNDLE_KEY, data)
+        state[MAPVIEW_BUNDLE_KEY] = data
     }
 
     fun restoreMapState(): Bundle {
