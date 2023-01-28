@@ -18,6 +18,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.gradle.android.cache-fix" version "2.6.3" apply false
+}
+
 allprojects {
     repositories {
         google()
