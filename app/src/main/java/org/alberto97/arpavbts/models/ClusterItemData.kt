@@ -17,4 +17,6 @@ class ClusterItemData(val data: Bts) : ClusterItem {
     override fun getSnippet(): String {
         return data.idImpianto.toString()
     }
+
+    override fun getZIndex(): Float? = null
 }
