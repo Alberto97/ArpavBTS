@@ -9,8 +9,10 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -144,9 +146,11 @@ class MapFragment : Fragment() {
             binding.map,
             { viewModel.restoreMapState() },
             { viewModel.saveMapState(it) })
-        lifecycle.coroutineScope.launchWhenCreated {
-            googleMap = binding.map.awaitMap()
-            onMapReady()
+        lifecycle.coroutineScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                googleMap = binding.map.awaitMap()
+                onMapReady()
+            }
         }
     }
 
