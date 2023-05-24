@@ -1,15 +1,16 @@
 package org.alberto97.arpavbts.models
 
-import com.squareup.moshi.JsonClass
-import org.alberto97.arpavbts.tools.moshi.AndroidColor
+import kotlinx.serialization.Serializable
+import org.alberto97.arpavbts.tools.serializers.AndroidColorSerializer
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class GestoriConfigModel(val gestori: List<GestoreConfigModel>)
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class GestoreConfigModel(
     val label: String,
     val rawName: String,
-    @AndroidColor val color: Int,
+    @Serializable(with = AndroidColorSerializer::class)
+    val color: Int,
     val preferred: Boolean = false
 )

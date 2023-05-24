@@ -2,13 +2,12 @@ package org.alberto97.arpavbts.tools
 
 import android.content.Context
 import android.graphics.Color
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.serialization.json.Json
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.GestoreConfigModel
 import org.alberto97.arpavbts.models.GestoriConfigModel
 import org.alberto97.arpavbts.tools.Extensions.readRawTextFile
-import org.alberto97.arpavbts.tools.moshi.AndroidColorAdapter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,12 +26,7 @@ class OperatorConfig @Inject constructor(@ApplicationContext val context: Contex
 
     init {
         val json = context.resources.readRawTextFile(R.raw.gestori_config)
-
-        val moshi = Moshi.Builder()
-            .add(AndroidColorAdapter())
-            .build()
-        val jsonAdapter = moshi.adapter(GestoriConfigModel::class.java)
-        val jsonData = jsonAdapter.fromJson(json) ?: throw Exception("Cannot deserialize config.json")
+        val jsonData = Json.decodeFromString<GestoriConfigModel>(json)
 
         gestoreList = jsonData.gestori
         gestoreMap = gestoreList.associateBy { gestore -> gestore.rawName }

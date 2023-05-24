@@ -4,12 +4,15 @@ package org.alberto97.arpavbts
 
 import android.content.Context
 import androidx.room.Room
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import org.alberto97.arpavbts.db.AppDatabase
 import org.alberto97.arpavbts.db.AppDbMigrations
 import org.alberto97.arpavbts.db.BtsRepository
@@ -18,7 +21,6 @@ import org.alberto97.arpavbts.repositories.IOperatorRepository
 import org.alberto97.arpavbts.repositories.OperatorRepository
 import org.alberto97.arpavbts.tools.*
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -63,11 +65,14 @@ object DatabaseModule {
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     @Provides
-    fun provideRetrofit(): Retrofit =
-        Retrofit.Builder()
+    fun provideRetrofit(): Retrofit {
+        val json = Json { ignoreUnknownKeys = true }
+        val contentType = "application/json".toMediaType()
+        return Retrofit.Builder()
             .baseUrl("http://alberto97.altervista.org/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
 
     @Provides
     fun provideBtsApi(retrofit: Retrofit): ArpavApi =

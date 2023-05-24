@@ -4,36 +4,35 @@ import android.app.Application
 import android.content.Context
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
-import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class MapState(
     val lat: Double,
     val lon: Double,
     val zoom: Float
 )
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class MapStateSerializer : Serializer<MapState?> {
-    private val adapter = Moshi.Builder().build().adapter(MapState::class.java)
 
     override val defaultValue: MapState? = null
 
     override suspend fun readFrom(input: InputStream): MapState? = withContext(Dispatchers.IO) {
         val text = input.bufferedReader().use { it.readText() }
-        adapter.fromJson(text)
+        Json.decodeFromString(text)
     }
 
     override suspend fun writeTo(t: MapState?, output: OutputStream) = withContext(Dispatchers.IO) {
-        val text = adapter.toJson(t)
+        val text = Json.encodeToString(t)
         output.write(text.toByteArray())
     }
 
