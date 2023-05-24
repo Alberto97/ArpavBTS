@@ -4,9 +4,6 @@ import kotlinx.serialization.Serializable
 import org.alberto97.arpavbts.tools.serializers.AndroidColorSerializer
 
 @Serializable
-class GestoriConfigModel(val gestori: List<GestoreConfigModel>)
-
-@Serializable
 class GestoreConfigModel(
     val label: String,
     val rawName: String,
