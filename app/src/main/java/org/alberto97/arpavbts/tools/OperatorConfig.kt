@@ -6,7 +6,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.json.Json
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.models.GestoreConfigModel
-import org.alberto97.arpavbts.models.GestoriConfigModel
 import org.alberto97.arpavbts.tools.Extensions.readRawTextFile
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,9 +25,7 @@ class OperatorConfig @Inject constructor(@ApplicationContext val context: Contex
 
     init {
         val json = context.resources.readRawTextFile(R.raw.gestori_config)
-        val jsonData = Json.decodeFromString<GestoriConfigModel>(json)
-
-        gestoreList = jsonData.gestori
+        gestoreList = Json.decodeFromString(json)
         gestoreMap = gestoreList.associateBy { gestore -> gestore.rawName }
     }
 
