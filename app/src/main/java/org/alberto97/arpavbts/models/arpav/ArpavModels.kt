@@ -1,11 +1,11 @@
 package org.alberto97.arpavbts.models.arpav
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 
 @Suppress("unused")
-@JsonClass(generateAdapter = true)
+@Serializable
 class FeatureCollection(
     val type: String,
     val totalFeatures: Int,
@@ -13,7 +13,7 @@ class FeatureCollection(
 )
 
 @Suppress("unused")
-@JsonClass(generateAdapter = true)
+@Serializable
 class Feature(
     val type: String,
     val id: String,
@@ -22,12 +22,12 @@ class Feature(
 )
 
 @Suppress("unused")
-@JsonClass(generateAdapter = true)
+@Serializable
 class FeatureGeometry(val type: String, val coordinates: List<List<Float>>)
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class FeatureProperties(
-    @Json(name = "id_impianto")
+    @SerialName("id_impianto")
     val idImpianto: Int,
     val codice: String,
     val nome: String,
@@ -35,7 +35,7 @@ class FeatureProperties(
     val indirizzo: String?,
     val comune: String,
     val provincia: String,
-    @Json(name = "quota_slm")
+    @SerialName("quota_slm")
     val quotaSlm: Float,
     val postazione: String
 )
