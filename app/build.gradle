@@ -67,8 +67,8 @@ dependencies {
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    ksp "com.google.dagger:hilt-android-compiler:$hilt_version"
+    ksp 'androidx.hilt:hilt-compiler:1.1.0-alpha01'
 
     // Lifecycle
     def lifecycle_version = "2.6.1"
