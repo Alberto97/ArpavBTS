@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     // Hilt
-    val hiltVersion = "2.48"
+    val hiltVersion = "2.48.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
     ksp("androidx.hilt:hilt-compiler:1.1.0-alpha01")
