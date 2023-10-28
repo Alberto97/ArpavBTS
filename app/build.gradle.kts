@@ -74,7 +74,7 @@ dependencies {
     ksp("androidx.hilt:hilt-compiler:1.1.0-alpha01")
 
     // Lifecycle
-    val lifecycleVersion = "2.6.1"
+    val lifecycleVersion = "2.6.2"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
     // Navigation
