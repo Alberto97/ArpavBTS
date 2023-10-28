@@ -30,8 +30,8 @@ abstract class AppDatabase : RoomDatabase() {
 
 object AppDbMigrations {
     val MIGRATION2_3 = object : Migration(2, 3) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("CREATE VIEW `operatorView` AS SELECT gestore as name, count(*) as towers FROM bts GROUP BY gestore")
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE VIEW `operatorView` AS SELECT gestore as name, count(*) as towers FROM bts GROUP BY gestore")
         }
     }
 }
