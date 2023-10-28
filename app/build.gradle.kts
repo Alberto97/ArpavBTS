@@ -7,6 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.gradle.android.cache-fix")
     id("com.google.devtools.ksp")
+    id("androidx.room") version "2.6.0"
 }
 
 android {
@@ -33,10 +34,6 @@ android {
 
         val endpoint = "\"http://alberto97.altervista.org/arpav/v1/impianti.json\""
         buildConfigField("String", "ENDPOINT_URL", (secureProps.getProperty("ENDPOINT_URL") ?: endpoint))
-
-        room {
-            schemaLocationDir.set(file("$projectDir/schemas"))
-        }
     }
     buildTypes {
         getByName("release") {
@@ -53,6 +50,10 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas/")
     }
 }
 
