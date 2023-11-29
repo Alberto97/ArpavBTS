@@ -7,7 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.gradle.android.cache-fix")
     id("com.google.devtools.ksp")
-    id("androidx.room") version "2.6.0"
+    id("androidx.room") version "2.6.1"
 }
 
 android {
