@@ -1,6 +1,5 @@
 package org.alberto97.arpavbts.viewmodels
 
-import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.work.Data
@@ -26,10 +25,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val state: SavedStateHandle,
-    private val app: Application,
     private val btsRepo: IBtsRepository,
     private val operatorConfig: IOperatorConfig,
-    private val mapStateManager: MapStateManager
+    private val mapStateManager: MapStateManager,
+    private val workManager: WorkManager,
 ) : ViewModel() {
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
@@ -95,7 +94,7 @@ class MapViewModel @Inject constructor(
             setInputData(data.build())
             setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         }
-        WorkManager.getInstance(app).enqueue(downloadWork.build())
+        workManager.enqueue(downloadWork.build())
     }
 
     fun saveMapState(data: Bundle) {

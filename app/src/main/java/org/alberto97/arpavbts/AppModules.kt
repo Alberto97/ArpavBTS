@@ -3,7 +3,10 @@
 package org.alberto97.arpavbts
 
 import android.content.Context
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module
@@ -77,4 +80,21 @@ object NetworkModule {
     @Provides
     fun provideBtsApi(retrofit: Retrofit): ArpavApi =
         retrofit.create(ArpavApi::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object WorkModule {
+    @Singleton
+    @Provides
+    fun provideWorkManager(
+        @ApplicationContext context: Context,
+        workerFactory: HiltWorkerFactory
+    ): WorkManager {
+        val workConfig = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+        WorkManager.initialize(context, workConfig)
+        return WorkManager.getInstance(context)
+    }
 }
