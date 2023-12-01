@@ -12,7 +12,7 @@ class MainApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
-    override fun getWorkManagerConfiguration() =
+    override val workManagerConfiguration =
         Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
