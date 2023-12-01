@@ -100,7 +100,7 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
     // Work
-    val workVersion = "2.8.1"
+    val workVersion = "2.9.0"
     implementation("androidx.work:work-runtime-ktx:$workVersion")
     implementation("androidx.hilt:hilt-work:1.1.0")
 }
