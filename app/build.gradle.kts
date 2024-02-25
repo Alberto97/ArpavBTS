@@ -102,5 +102,5 @@ dependencies {
     // Work
     val workVersion = "2.9.0"
     implementation("androidx.work:work-runtime-ktx:$workVersion")
-    implementation("androidx.hilt:hilt-work:1.1.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
 }
