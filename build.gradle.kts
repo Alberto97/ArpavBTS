@@ -8,7 +8,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version kotlinVersion apply false
     id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion apply false
     id("com.google.dagger.hilt.android") version "2.50" apply false
-    id("com.google.devtools.ksp") version "$kotlinVersion-1.0.15" apply false
+    id("com.google.devtools.ksp") version "$kotlinVersion-1.0.17" apply false
 }
 
 allprojects {
