@@ -73,10 +73,6 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
     ksp("androidx.hilt:hilt-compiler:1.2.0")
 
-    // Lifecycle
-    val lifecycleVersion = "2.8.0"
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-
     // Navigation
     val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")

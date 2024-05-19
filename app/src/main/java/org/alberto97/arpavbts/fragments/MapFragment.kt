@@ -24,6 +24,7 @@ import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.ktx.awaitMap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.alberto97.arpavbts.R
 import org.alberto97.arpavbts.adapters.BTSAdapter
@@ -104,11 +105,13 @@ class MapFragment : Fragment() {
             viewModel.clearOperator()
         }
 
-        viewModel.selectedOperator.observe(viewLifecycleOwner) { operator ->
-            if (operator.isNullOrEmpty())
-                binding.fab.hide()
-            else
-                binding.fab.show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.selectedOperator.collectLatest { operator ->
+                if (operator.isNullOrEmpty())
+                    binding.fab.hide()
+                else
+                    binding.fab.show()
+            }
         }
     }
 
@@ -117,14 +120,18 @@ class MapFragment : Fragment() {
         binding.btsRecyclerView.adapter = BTSAdapter()
 
         // Title
-        viewModel.btsDataTitle.observe(viewLifecycleOwner) {
-            binding.btsName.text = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.btsDataTitle.collectLatest {
+                binding.btsName.text = it
+            }
         }
 
         // Recyclerview refresh
-        viewModel.btsData.observe(viewLifecycleOwner) {
-            val adapter = binding.btsRecyclerView.adapter as BTSAdapter
-            adapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.btsData.collectLatest {
+                val adapter = binding.btsRecyclerView.adapter as BTSAdapter
+                adapter.submitList(it)
+            }
         }
     }
 
@@ -133,9 +140,11 @@ class MapFragment : Fragment() {
         binding.gestoreRecyclerView.adapter = GestoreAdapter { out -> onBtsClick(out) }
 
         // Recyclerview refresh
-        viewModel.gestoreData.observe(viewLifecycleOwner) {
-            val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
-            adapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.gestoreData.collectLatest {
+                val adapter = binding.gestoreRecyclerView.adapter as GestoreAdapter
+                adapter.submitList(it)
+            }
         }
     }
 
@@ -170,8 +179,10 @@ class MapFragment : Fragment() {
             googleMap.setMapStyle(mapStyle)
         }
 
-        viewModel.btsList.observe(viewLifecycleOwner) {
-            setMarkers(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.btsList.collectLatest {
+                setMarkers(it)
+            }
         }
 
         // Setup custom marker renderer for multiple marker colors
