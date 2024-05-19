@@ -94,7 +94,7 @@ dependencies {
     implementation("com.google.maps.android:maps-ktx:5.0.0")
 
     // Retrofit
-    val retrofitVersion = "2.9.0"
+    val retrofitVersion = "2.11.0"
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
