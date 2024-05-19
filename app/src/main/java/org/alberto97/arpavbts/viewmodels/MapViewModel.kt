@@ -8,6 +8,10 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import com.google.android.gms.maps.model.CameraPosition
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.alberto97.arpavbts.R
@@ -34,18 +38,24 @@ class MapViewModel @Inject constructor(
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
 
-    private val _selectedOperator = MutableLiveData<String?>(null)
-    val selectedOperator: LiveData<String?> = _selectedOperator
+    private val _selectedOperator = MutableStateFlow<String?>(null)
+    val selectedOperator = _selectedOperator.asStateFlow()
 
-    val btsList: LiveData<List<ClusterItemData>> = _selectedOperator.switchMap { carrier ->
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val btsList = _selectedOperator.flatMapLatest { carrier ->
         btsRepo.getBts(carrier).map { list ->
             list.map { item -> ClusterItemData(item) }
-        }.asLiveData()
+        }
     }
 
-    val btsDataTitle = MutableLiveData<String>()
-    val btsData = MutableLiveData<List<BTSDetailsAdapterItem>>()
-    val gestoreData = MutableLiveData<List<GestoreAdapterItem>>()
+    private val _btsDataTitle = MutableStateFlow("")
+    val btsDataTitle = _btsDataTitle.asStateFlow()
+
+    private val _btsData = MutableStateFlow<List<BTSDetailsAdapterItem>>(listOf())
+    val btsData = _btsData.asStateFlow()
+
+    private val _gestoreData = MutableStateFlow<List<GestoreAdapterItem>>(listOf())
+    val gestoreData = _gestoreData.asStateFlow()
 
     init {
         updateDb()
@@ -60,7 +70,7 @@ class MapViewModel @Inject constructor(
     }
 
     fun setBtsData(data: Bts) {
-        btsDataTitle.value = data.nome
+        _btsDataTitle.value = data.nome
 
         val tempList = arrayListOf(
             BTSDetailsAdapterItem(R.drawable.ic_code_black_24dp, data.codice),
@@ -72,7 +82,7 @@ class MapViewModel @Inject constructor(
 
         // Remove missing info
         val list = tempList.filter { !it.text.isNullOrEmpty() && it.text != "NO DATA" }
-        btsData.value = list
+        _btsData.value = list
     }
 
     fun setGestoreData(data: List<ClusterItemData>) {
@@ -83,7 +93,7 @@ class MapViewModel @Inject constructor(
                 it.data.idImpianto.toString()
             )
         }
-        gestoreData.value = list
+        _gestoreData.value = list
     }
 
     fun updateDb(forceUpdate: Boolean = false) {
