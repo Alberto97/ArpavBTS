@@ -64,7 +64,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.datastore:datastore:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.7.1")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     // Hilt
