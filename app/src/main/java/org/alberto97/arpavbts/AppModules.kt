@@ -7,7 +7,6 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,6 +23,7 @@ import org.alberto97.arpavbts.repositories.IOperatorRepository
 import org.alberto97.arpavbts.repositories.OperatorRepository
 import org.alberto97.arpavbts.tools.*
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
 
 @Module
