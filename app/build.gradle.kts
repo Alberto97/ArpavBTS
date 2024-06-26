@@ -85,7 +85,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation("com.google.maps.android:android-maps-utils:3.8.2")
     implementation("com.google.maps.android:maps-ktx:5.0.0")
 
