@@ -96,7 +96,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-kotlinx-serialization:$retrofitVersion")
 
     // Work
-    val workVersion = "2.9.0"
+    val workVersion = "2.9.1"
     implementation("androidx.work:work-runtime-ktx:$workVersion")
     implementation("androidx.hilt:hilt-work:1.2.0")
 }
